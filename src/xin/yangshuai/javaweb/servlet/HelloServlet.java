@@ -29,7 +29,17 @@ public class HelloServlet implements Servlet {
 
 		String servletName = servletConfig.getServletName();
 		System.out.println(servletName);
-	}
+
+        ServletContext servletContext = servletConfig.getServletContext();
+
+        Enumeration<String> initParameterNames = servletContext.getInitParameterNames();
+        while (initParameterNames.hasMoreElements()){
+            String name = initParameterNames.nextElement();
+            String value = servletContext.getInitParameter(name);
+            System.out.println("ServletContext, " + name + " : " + value);
+        }
+
+    }
 
 	@Override
 	public ServletConfig getServletConfig() {

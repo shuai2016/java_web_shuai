@@ -222,7 +222,36 @@
 9. ServletContext
 
    1. 可以由ServletConfig获取
-   2. 该对象代表当前WEB应用：
+
+   2. 该对象代表当前WEB应用：可以认为ServletContext是当前WEB应用的一个大管家，可以从中获取到当前WEB应用的各个方面的信息
+
+   3. 设置当前WEB应用的初始化参数，可以为所用的Servlet所获取
+
+      ```xml
+      <!--配置当前WEB应用的初始化参数-->
+      <context-param>
+          <param-name>driver</param-name>
+          <param-value>com.mysql.jdbc.Driver</param-value>
+      </context-param>
+      
+      <context-param>
+          <param-name>jdbcUrl</param-name>
+          <param-value>jdbc:mysql:///test</param-value>
+      </context-param>
+      ```
+
+   4. 获取 WEB应用的初始化参数
+
+      ```java
+      ServletContext servletContext = servletConfig.getServletContext();
+      
+      Enumeration<String> initParameterNames = servletContext.getInitParameterNames();
+      while (initParameterNames.hasMoreElements()){
+          String name = initParameterNames.nextElement();
+          String value = servletContext.getInitParameter(name);
+          System.out.println("ServletContext, " + name + " : " + value);
+      }
+      ```
 
 10. HTTP协议GET和POST请求
 

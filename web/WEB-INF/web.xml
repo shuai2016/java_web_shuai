@@ -3,6 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    
+    <!--配置当前WEB应用的初始化参数-->
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>com.mysql.jdbc.Driver</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>jdbcUrl</param-name>
+        <param-value>jdbc:mysql:///test</param-value>
+    </context-param>
 
     <!-- 配置和映射Servlet -->
     <servlet>
@@ -35,8 +46,14 @@
         <servlet-name>secondServlet</servlet-name>
         <!--Servlet 的全类名-->
         <servlet-class>xin.yangshuai.javaweb.servlet.SecondServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
     </servlet>
+
+    <servlet-mapping>
+        <!--需要和某一个servlet 节点的 servlet-name 字节点的文本节点一致-->
+        <servlet-name>secondServlet</servlet-name>
+        <!--映射具体的访问路径：/ 代表当前 WEB 应用的根目录-->
+        <url-pattern>/second</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>
