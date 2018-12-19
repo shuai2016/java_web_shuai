@@ -165,7 +165,64 @@
 
 8. ServletConfig对象
 
+   1. 封装了Servlet的配置信息，并且可以获取ServletContext对象
+
+   2. 配置Servlet的初始化参数
+
+      ```xml
+      <!-- 配置和映射Servlet -->
+      <servlet>
+          <!--Servlet 注册的名字-->
+          <servlet-name>helloServlet</servlet-name>
+          <!--Servlet 的全类名-->
+          <servlet-class>xin.yangshuai.javaweb.servlet.HelloServlet</servlet-class>
+          <!--配置Servlet的初始化参数-->
+          <init-param>
+              <!--参数名-->
+              <param-name>user</param-name>
+              <!--参数值-->
+              <param-value>root</param-value>
+          </init-param>
+          <init-param>
+              <param-name>password</param-name>
+              <param-value>1230</param-value>
+          </init-param>
+          <load-on-startup>1</load-on-startup>
+      </servlet>
+      ```
+
+      1. 要放到load-on-startup标签前面使用
+
+   3. 获取初始化参数
+
+      ```java
+      @Override
+      public void init(ServletConfig servletConfig) throws ServletException {
+         System.out.println("HelloServlet's init");
+      
+         Enumeration<String> names = servletConfig.getInitParameterNames();
+         while (names.hasMoreElements()){
+            String name = names.nextElement();
+            String value = servletConfig.getInitParameter(name);
+            System.out.println(name + " : " + value);
+         }
+      }
+      ```
+
+      1. getInitParameter(String var1)：获取指定参数名的初始化参数
+      2. getInitParameterNames()：获取参数名组成的Enumeration\<String> 对象
+
+   4. 获取Servlet的配置名称
+
+      ```java
+      String servletName = servletConfig.getServletName();
+      System.out.println(servletName);
+      ```
+
 9. ServletContext
+
+   1. 可以由ServletConfig获取
+   2. 该对象代表当前WEB应用：
 
 10. HTTP协议GET和POST请求
 
