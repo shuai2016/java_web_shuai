@@ -57,7 +57,7 @@
 
     <servlet>
         <servlet-name>loginServlet</servlet-name>
-        <servlet-class>xin.yangshuai.javaweb.servlet.LoginServlet</servlet-class>
+        <servlet-class>xin.yangshuai.javaweb.servlet.LoginServlet1</servlet-class>
     </servlet>
 
     <servlet-mapping>

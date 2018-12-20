@@ -1,7 +1,7 @@
 package xin.yangshuai.javaweb.servlet;
 
-import javax.servlet.*;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * SecondServlet
@@ -9,35 +9,14 @@ import java.io.IOException;
  * @author shuai
  * @date 2018/12/18
  */
-public class SecondServlet implements Servlet {
-	public SecondServlet() {
-		System.out.println("SecondServlet's constructor");
-	}
+public class SecondServlet extends MyHttpServlet {
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		System.out.println("SecondServlet's init");
-	}
+    }
 
-	@Override
-	public ServletConfig getServletConfig() {
-		System.out.println("SecondServlet's getServletConfig");
-		return null;
-	}
-
-	@Override
-	public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
-		System.out.println("SecondServlet's service");
-	}
-
-	@Override
-	public String getServletInfo() {
-		System.out.println("SecondServlet's getServletInfo");
-		return null;
-	}
-
-	@Override
-	public void destroy() {
-		System.out.println("SecondServlet's destroy");
-	}
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+        this.doPost(request, response);
+    }
 }
