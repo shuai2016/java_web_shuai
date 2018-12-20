@@ -225,223 +225,323 @@
 
    2. 该对象代表当前WEB应用：可以认为ServletContext是当前WEB应用的一个大管家，可以从中获取到当前WEB应用的各个方面的信息
 
-   3. 设置当前WEB应用的初始化参数，可以为所用的Servlet所获取
+   3. ServletContext常用的方法
 
-      ```xml
-      <!--配置当前WEB应用的初始化参数-->
-      <context-param>
-          <param-name>driver</param-name>
-          <param-value>com.mysql.jdbc.Driver</param-value>
-      </context-param>
-      
-      <context-param>
-          <param-name>jdbcUrl</param-name>
-          <param-value>jdbc:mysql:///test</param-value>
-      </context-param>
-      ```
+      1. 获取 WEB应用的初始化参数
 
-   4. 获取 WEB应用的初始化参数
+         1. 配置当前WEB应用的初始化参数，可以为所有的Servlet所获取
 
-      ```java
-      ServletContext servletContext = servletConfig.getServletContext();
-      
-      Enumeration<String> initParameterNames = servletContext.getInitParameterNames();
-      while (initParameterNames.hasMoreElements()){
-          String name = initParameterNames.nextElement();
-          String value = servletContext.getInitParameter(name);
-          System.out.println("ServletContext, " + name + " : " + value);
-      }
-      ```
+            ```xml
+            <!--配置当前WEB应用的初始化参数-->
+            <context-param>
+                <param-name>driver</param-name>
+                <param-value>com.mysql.jdbc.Driver</param-value>
+            </context-param>
+            
+            <context-param>
+                <param-name>jdbcUrl</param-name>
+                <param-value>jdbc:mysql:///test</param-value>
+            </context-param>
+            ```
+
+         2. 获取 WEB应用的初始化参数
+
+            ```java
+            ServletContext servletContext = servletConfig.getServletContext();
+            
+            Enumeration<String> initParameterNames = servletContext.getInitParameterNames();
+            while (initParameterNames.hasMoreElements()){
+                String name = initParameterNames.nextElement();
+                String value = servletContext.getInitParameter(name);
+                System.out.println("ServletContext, " + name + " : " + value);
+            }
+            ```
+
+      2. 获取当前WEB应用的某一文件在服务器上的绝对路径，而不是部署前的路径
+
+         ```java
+         String realPath = servletContext.getRealPath("/test.txt");
+         System.out.println("realPath :" + realPath);
+         ```
+
+         1. 实际该文件不一定真正存在
+
+      3. 获取当前WEB应用的名称
+
+         ```java
+         String contextPath = servletContext.getContextPath();
+         System.out.println("contextPath : " + contextPath);
+         ```
+
+      4. 获取当前WEB应用的某一个文件对应的输入流
+
+         ```java
+         InputStream resourceAsStream = servletContext.getResourceAsStream("/WEB-INF/classes/jdbc.properties");
+         System.out.println(resourceAsStream);
+         ```
+
+         1. 参数为以当前	WEB 应用根路径（“/”）开始路径
 
 10. HTTP协议GET和POST请求
 
-11. ServletRequest
+   1. HTTP简介
+      1. WEB浏览器也WEB服务器之间的一问一答的交互过程必须遵循一定的规则，这个规则就是HTTP协议
+      2. 超文本传输协议的简写，是TCP/IP协议集中的一个应用层协议，用于定义WEB浏览器与WEB服务器之间交换数据的过程以及数据本身的格式。
+   2. GET请求
+      1. 在浏览器地址输入某个URL地址或单击网页上的一个超链接时，浏览器发出的HTTP请求方式是GET
+      2. 如果网页中的\<form>表单元素的method属性被设置为了“GET”，浏览器提交这个FORM表单时生成的HTTP请求消息的请求方式也为GET。 
+      3. 使用GET请求方式给WEB服务器传递参数的格式：  	http:/xxx/xx?name=lc&password=123
+      4. 使用GET方式传送的数据量一般限制在1KB以下。
+   3. POST请求
+      1. POST请求方式主要用于向WEB服务器端程序提交FORM表单中的数据：form表单的method置为POST
+      2. POST方式将各个表单字段元素及其数据作为HTTP消息的实体内容发送给WEB服务器，传送的数据量要比使用GET方式传送的数据量大得多。  
 
-12. ServletResponse
+11. ServletRequest和ServletResponse
 
-13. GenericServlet
+    1. 这个两个接口的实现类都是服务器给予实现的，并在服务器调用service方法时传入
 
-14. HttpServlet
+12. ServletRequest
 
-15. 小结及练习
+    1. 封装了请求信息，可以从中获取到任何的请求信息
 
-16. JSP概述
+    2. 获取请求参数：
 
-17. JSP页面的9个隐含对象
+       1. `String getParameter(String var1);`：根据请求参数的名字获取请求值
+          1. 若请求参数有多个值（例如多选checkbox），该方法只能取到第一个提交的值，应使用getParameterValues方法
+       2. `String[] getParameterValues(String var1);`：根据请求参数的名字，返回请求参数对应的字符串数组
+       3. `Enumeration<String> getParameterNames();`：返回参数名对应的Enumeration对象，类似与ServletConfig（或ServletContext）的getInitParameterNames()方法
+       4. `Map<String, String[]> getParameterMap();`：返回请求参数的键值对
 
-18. JSP语法
+    3. HttpServletRequest：是ServletRequest的子接口，针对于HTTP请求所定义，里边包含了大量获取HTTP请求相关的方法。
 
-19. 域对象的属性操作
+       ```java
+       HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+       //获取请求的URI
+       String requestURI = httpServletRequest.getRequestURI();
+       //获取请求方法
+       String method = httpServletRequest.getMethod();
+       //若是一个GET请求，获取请求参数对应的那个字符串，即 ? 后的那个字符串。
+       String queryString = httpServletRequest.getQueryString();
+       //获取请求的Servlet的映射路径
+       String servletPath = httpServletRequest.getServletPath();
+       ```
 
-20. 请求的转发和重定向
+13. ServletResponse
 
-21. JSP小结（1）
+    1. 封装了响应信息，如果想给用户什么响应，具体可以是该接口的方法实现
 
-22. page指令
+    2. 常用方法
 
-23. include指令
+       ```java
+       servletResponse.setContentType("application/msword");
+       PrintWriter writer = servletResponse.getWriter();
+       writer.print("Hello World !");
+       ```
 
-24. JSP标签
+       1. `getWriter()`：返回PrintWriter 对象，调用该对象的print()方法，将把print()中的参数直接打印到客户的浏览器上
+       2. `setContentType("application/msword");`：设置响应内容类型
 
-25. 中文乱码问题
+    3. HttpServletResponse
 
-26. JSP小结（2）
+       1. `void sendRedirect(String var1) `：请求重定向
 
-27. MVC设计模式
+14. GenericServlet
 
-28. MVC案例之查询
+    1. 是一个Servlet，是Servlet接口和ServletConfig 接口的实现类，但是一个抽象类，其中的service方法为抽象方法
+    2. 如果新建的Servlet程序直接继承GenericServlet会使开发更简洁
+    3. 具体实现
+       1. 在GenericServlet中声明了一个ServletConfig类型的成员变量，在`init(ServletConfig config) `方法中对其进行了初始化
+       2. 利用servletConfig成员变量的方法实现了ServletConfig接口的方法
+       3. 还定义了一个init()方法，在`init(ServletConfig config) `中对其进行调用，子类可以直接覆盖init()在其中实现对Servlet的初始化
+       4. 不建议直接覆盖`init(ServletConfig config) `，因为如果忘记编写super.init(ServletConfig)，而且用了ServletConfig接口的方法，则会出现空指针异常。
+       5. 新建的init()并非Servlet的生命周期方法，而init(ServletConfig)使生命周期相关的方法
 
-29. MVC案例之删除
+15. HttpServlet
 
-30. MVC案例之架构分析
+    1. 是一个Servlet，继承自GenericServlet，针对于HTTP协议所定制
+    2. 在service()方法中直接把ServletRequest和ServletResponse转为HttpServletRequest和HttpServletResponse，并调用了重载的service(HttpServletRequest,HttpServletResponse)，在重载的service(HttpServletRequest,HttpServletResponse)方法中获取了请求方式：request.getMethod()，根据请求方式又创建了doXxx()方法（比如doGet，doPost）
+    3.  实际开发中，直接继承HttpServlet，并根据请求覆写doXxx()方法接口
+    4. 好处：直接有针对性的覆盖doXxx()方法；直接使用HttpServletRequest和HttpServletResponse，不再需要强转
 
-31. MVC案例之DAO层设计
+16. 小结及练习
 
-32. MVC案例之DAO层实现
+17. JSP概述
 
-33. MVC案例之多个请求对应一个Servlet
+18. JSP页面的9个隐含对象
 
-34. MVC案例之（模糊）查询
+19. JSP语法
 
-35. MVC案例之删除操作
+20. 域对象的属性操作
 
-36. MVC案例之小结（1）
+21. 请求的转发和重定向
 
-37. MVC案例之新增Customer
+22. JSP小结（1）
 
-38. MVC案例之修改思路分析
+23. page指令
 
-39. MVC案例之修改代码实现
+24. include指令
 
-40. MVC案例之通过配置切换底层存储源
+25. JSP标签
 
-41. MVC案例之小结（2）
+26. 中文乱码问题
 
-42. Cookie概述
+27. JSP小结（2）
 
-43. 利用Cookie进行自动登录
+28. MVC设计模式
 
-44. 利用Cookie显示最近浏览的商品
+29. MVC案例之查询
 
-45. 设置Cookie的作用路径
+30. MVC案例之删除
 
-46. Cookie小结
+31. MVC案例之架构分析
 
-47. HttpSession概述
+32. MVC案例之DAO层设计
 
-48. HttpSession的生命周期
+33. MVC案例之DAO层实现
 
-49. HttpSession常用方法示例
+34. MVC案例之多个请求对应一个Servlet
 
-50. HttpSessionURL重写
+35. MVC案例之（模糊）查询
 
-51. HttpSession小结（1）
+36. MVC案例之删除操作
 
-52. HttpSession之简易购物车
+37. MVC案例之小结（1）
 
-53. JavaWeb中的相对路径和绝对路径
+38. MVC案例之新增Customer
 
-54. HttpSession之表单的重复提交
+39. MVC案例之修改思路分析
 
-55. HttpSession之验证码
+40. MVC案例之修改代码实现
 
-56. HttpSession小结（2）
+41. MVC案例之通过配置切换底层存储源
 
-57. 使用JavaBean
+42. MVC案例之小结（2）
 
-58. EL语法
+43. Cookie概述
 
-59. EL详解
+44. 利用Cookie进行自动登录
 
-60. 简单标签的HelloWorld
+45. 利用Cookie显示最近浏览的商品
 
-61. 带属性的自定义标签
+46. 设置Cookie的作用路径
 
-62. 带标签体的自定义标签
+47. Cookie小结
 
-63. 带父标签的自定义标签
+48. HttpSession概述
 
-64. EL自定义函数
+49. HttpSession的生命周期
 
-65. 简单标签小结
+50. HttpSession常用方法示例
 
-66. JSTL表达式操作
+51. HttpSessionURL重写
 
-67. JSTL流程控制操作
+52. HttpSession小结（1）
 
-68. JSTL迭代操作
+53. HttpSession之简易购物车
 
-69. JSTL_URL操作
+54. JavaWeb中的相对路径和绝对路径
 
-70. JSTL改写MVC案例
+55. HttpSession之表单的重复提交
 
-71. Filter概述
+56. HttpSession之验证码
 
-72. 创建HttpFilter
+57. HttpSession小结（2）
 
-73. 理解多个Filter代码的执行顺序
+58. 使用JavaBean
 
-74. 配置Filter的dispatcher节点
+59. EL语法
 
-75. 禁用浏览器缓存的过滤器
+60. EL详解
 
-76. 字符编码过滤器
+61. 简单标签的HelloWorld
 
-77. 检查用户是否登录的过滤器
+62. 带属性的自定义标签
 
-78. Filter小结（1）
+63. 带标签体的自定义标签
 
-79. 权限管理思路分析
+64. 带父标签的自定义标签
 
-80. 权限管理代码实现
+65. EL自定义函数
 
-81. 权限过滤思路分析
+66. 简单标签小结
 
-82. 权限过滤代码实现
+67. JSTL表达式操作
 
-83. HttpServletRequestWrapper
+68. JSTL流程控制操作
 
-84. Filter小结（2）
+69. JSTL迭代操作
 
-85. 监听域对象创建和销毁的Listener
+70. JSTL_URL操作
 
-86. 通过Listener理解域对象生命周期
+71. JSTL改写MVC案例
 
-87. 其它的Servlet监听器
+72. Filter概述
 
-88. Servlet监听器小结
+73. 创建HttpFilter
 
-89. 文件上传基础
+74. 理解多个Filter代码的执行顺序
 
-90. 使用fileupload组件
+75. 配置Filter的dispatcher节点
 
-91. 文件上传案例_需求
+76. 禁用浏览器缓存的过滤器
 
-92. 文件上传案例_JS代码
+77. 字符编码过滤器
 
-93. 文件上传案例_约束的可配置性
+78. 检查用户是否登录的过滤器
 
-94. 文件上传案例_总体步骤分析
+79. Filter小结（1）
 
-95. 文件上传案例_构建FileUploadBean集合
+80. 权限管理思路分析
 
-96. 文件上传案例_完成文件的上传
+81. 权限管理代码实现
 
-97. 文件上传案例_复习
+82. 权限过滤思路分析
 
-98. 文件上传案例_校验及小结
+83. 权限过滤代码实现
 
-99. 文件下载
+84. HttpServletRequestWrapper
 
-100. 国际化之Locale
+85. Filter小结（2）
 
-101. 国际化之DateFormat
+86. 监听域对象创建和销毁的Listener
 
-102. 国际化之NumberFormat
+87. 通过Listener理解域对象生命周期
 
-103. 国际化之MessageFormat
+88. 其它的Servlet监听器
 
-104. 国际化之ResourceBundle
+89. Servlet监听器小结
 
-105. 国际化之fmt标签及小结
+90. 文件上传基础
+
+91. 使用fileupload组件
+
+92. 文件上传案例_需求
+
+93. 文件上传案例_JS代码
+
+94. 文件上传案例_约束的可配置性
+
+95. 文件上传案例_总体步骤分析
+
+96. 文件上传案例_构建FileUploadBean集合
+
+97. 文件上传案例_完成文件的上传
+
+98. 文件上传案例_复习
+
+99. 文件上传案例_校验及小结
+
+100. 文件下载
+
+101. 国际化之Locale
+
+102. 国际化之DateFormat
+
+103. 国际化之NumberFormat
+
+104. 国际化之MessageFormat
+
+105. 国际化之ResourceBundle
+
+106. 国际化之fmt标签及小结
 

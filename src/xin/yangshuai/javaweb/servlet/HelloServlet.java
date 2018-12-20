@@ -2,6 +2,7 @@ package xin.yangshuai.javaweb.servlet;
 
 import javax.servlet.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 
 /**
@@ -39,7 +40,16 @@ public class HelloServlet implements Servlet {
             System.out.println("ServletContext, " + name + " : " + value);
         }
 
-    }
+		String realPath = servletContext.getRealPath("/test.txt");
+		System.out.println("realPath : " + realPath);
+
+		String contextPath = servletContext.getContextPath();
+		System.out.println("contextPath : " + contextPath);
+
+		InputStream resourceAsStream = servletContext.getResourceAsStream("/WEB-INF/classes/jdbc.properties");
+		System.out.println(resourceAsStream);
+
+	}
 
 	@Override
 	public ServletConfig getServletConfig() {
