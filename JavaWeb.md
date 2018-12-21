@@ -290,7 +290,7 @@
   2. GET请求
      1. 在浏览器地址输入某个URL地址或单击网页上的一个超链接时，浏览器发出的HTTP请求方式是GET
      2. 如果网页中的\<form>表单元素的method属性被设置为了“GET”，浏览器提交这个FORM表单时生成的HTTP请求消息的请求方式也为GET。
-     3. 使用GET请求方式给WEB服务器传递参数的格式：  	http:/xxx/xx?name=lc&password=123
+     	. 使用GET请求方式给WEB服务器传递参数的格式：  	http:/xxx/xx?name=lc&password=123
      4. 使用GET方式传送的数据量一般限制在1KB以下。
   3. POST请求
      1. POST请求方式主要用于向WEB服务器端程序提交FORM表单中的数据：form表单的method置为POST
@@ -374,6 +374,49 @@
 20. 域对象的属性操作
 
 21. 请求的转发和重定向
+
+    1. 代码
+
+       1. 转发
+
+          ```java
+          /**
+           * 请求转发
+           * 1. 调用 HttpServletRequest 的 getRequestDispatcher 方法获取 RequestDispatcher 对象
+           * 2. 调用 RequestDispatcher 的 forward(request,response) 方法进行请求的转发
+           */
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/second");
+          dispatcher.forward(request,response);
+          ```
+
+       2. 重定向
+
+          ```java
+          /**
+           * 请求重定向
+           * 直接调用 response 的 sendRedirect 方法
+           */
+          response.sendRedirect("second");
+          ```
+
+    2. 本质区别
+
+       1. 请求的转发值发出了一次请求，而重定向则发出了两次请求
+
+    3. 具体区别
+
+       1. 地址栏
+          1. 转发：地址栏是初次发出请求的地址
+          2. 重定向：地址栏不再是初次发出的请求地址，地址栏为最后响应的那个地址
+       2. request对象
+          1. 转发：在最终的Servlet中，request对象和中转的那个request是同一个对象
+          2. 重定向：在最终的Servlet中，request对象和中转的那个request不是同一个对象
+       3. 请求资源
+          1. 转发：只能转发给当前WEB应用的资源
+          2. 重定向：可以重定向到任何资源
+       4. “/”
+          1. 转发：/ 代表的是当前WEB应用的根目录
+          2. 重定向：/ 代表的是当前WEB站点的根目录
 
 22. JSP小结（1）
 

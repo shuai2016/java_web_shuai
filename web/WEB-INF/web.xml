@@ -65,4 +65,24 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>forwardServlet</servlet-name>
+        <servlet-class>xin.yangshuai.javaweb.servlet.ForwardServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>forwardServlet</servlet-name>
+        <url-pattern>/forward</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>redirectServlet</servlet-name>
+        <servlet-class>xin.yangshuai.javaweb.servlet.RedirectServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>redirectServlet</servlet-name>
+        <url-pattern>/redirect</url-pattern>
+    </servlet-mapping>
+
 </web-app>
