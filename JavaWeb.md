@@ -465,13 +465,16 @@
     1. 提出问题
        1. HTTP协议是一种无状态的协议
        2. 作为WEB服务器，必须能够采用一种机制来唯一地标识一个用户，同时记录该用户的状态
+
     2. 会话和会话状态
        1. 借助会话状态，WEB服务器能够把属于同一会话中的一系列的请求和响应过程关联起来
+
     3. 实现有状态的会话
        1. 浏览器对其发出的每个请求消息都进行标识，同一个会话中的请求消息都附带同样的标识号，这个标识号称之为会话ID（SessionID）
        2. 在Servlet规范中，常用以下两种机制完成会话跟踪
           1. Cookie
           2. Session
+
     4. Cookie机制
        1. 在客户端保持HTTP状态信息的方案
        2. Cookie是在浏览器访问WEB服务器的某个资源时，由WEB服务器在HTTP响应消息头中附带传送给浏览器的一个小文本文件
@@ -480,7 +483,33 @@
        5. 一个Cookie只能标识一种信息，它至少含有一个标识信息的名称（NAME）和设置值（VALUE）
        6. 一个WEB站点可以给一个WEB浏览器发送多个Cookie，一个WEB浏览器也可以存储多个WEB站点提供的Cookie
        7. 浏览器一般只允许存放300个Cookie，每个站点最多存放20个Cookie，每个Cookie的大小限制为4KB
+
     5. Cookie的发送
+
+       1. 创建Cookie对象
+       2. 设置最大时效
+       3. 将Cookie放入到HTTP相应报头
+          1. 默认是一个会话级别的cookie，存储在浏览器的内存中，用户退出浏览器后被删除
+          2. 若希望浏览器将该cookie存储在磁盘上，则需要使用maxAge，并给出一个以秒为单位的时间。将最大时效设为0则表示浏览器立即删除该cookie，若为负数，表示不储存该Cookie
+          3. HttpServletResponse的addCookie方法，将cookie插入到一个Set-Cookie HTTP响应报头中。由于这个方法并不修改任何之前指定的Set-Cookie报头，而是创建新的报头，因此将这个方法称为是addCookie，而非setCookie
+
+    6. 会话cookie和持久cookie的区别
+
+       1. 会话cookie，不设置过期时间，会话cookie一般不保存在硬盘上而保存在内存里。
+       2. 如果设置里过期时间，浏览器会把cookie保存到硬盘上，关闭后再次打开浏览器，这些cookie依然有效直到超过设定的过期时间
+       3. 存储在硬盘上的cookie可以在不同的浏览器进程间共享，比如两个IE窗口。而对于保存在内存的cookie，不同的浏览器有不同的处理方式
+
+    7. 代码
+
+       ```java
+       Cookie cookie = new Cookie("name","cookie001");
+       cookie.setMaxAge(30);
+       response.addCookie(cookie);
+       Cookie[] cookies = request.getCookies();
+       for (Cookie cookie1 : cookies) {
+           System.out.println(cookie1.getName() + " : " + cookie1.getValue());
+       }
+       ```
 
 44. 利用Cookie进行自动登录
 

@@ -12,10 +12,13 @@
 </head>
 <body>
 <%
-  Cookie[] cookies = request.getCookies();
-  for (Cookie cookie1 : cookies) {
-    System.out.println(cookie1.getName() + " : " + cookie1.getValue());
-  }
+    Cookie cookie = new Cookie("name","cookie001");
+    cookie.setMaxAge(30);
+    response.addCookie(cookie);
+    Cookie[] cookies = request.getCookies();
+    for (Cookie cookie1 : cookies) {
+        System.out.println(cookie1.getName() + " : " + cookie1.getValue());
+    }
 %>
 
 </body>
