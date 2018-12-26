@@ -12,12 +12,16 @@
 </head>
 <body>
 <%
-    Cookie cookie = new Cookie("name","cookie001");
-    cookie.setMaxAge(30);
-    response.addCookie(cookie);
     Cookie[] cookies = request.getCookies();
-    for (Cookie cookie1 : cookies) {
+    if(cookies != null && cookies.length > 0){
+      for (Cookie cookie1 : cookies) {
         System.out.println(cookie1.getName() + " : " + cookie1.getValue());
+      }
+    } else {
+      Cookie cookie = new Cookie("name","cookie001");
+      cookie.setMaxAge(30);
+      response.addCookie(cookie);
+      System.out.println("创建一个cookie");
     }
 %>
 
