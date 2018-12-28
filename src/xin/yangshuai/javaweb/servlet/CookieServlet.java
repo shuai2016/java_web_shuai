@@ -22,11 +22,15 @@ public class CookieServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		Cookie cookie = new Cookie("name","cookie001");
-//		response.addCookie(cookie);
-		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie1 : cookies) {
-			System.out.println(cookie1.getName() + " : " + cookie1.getValue());
-		}
-	}
+	    //1. 创建一个Cookie对象
+        Cookie cookie = new Cookie("name","cookie001");
+        //2. setMaxAge：单位：秒，值为0，表示立即删除；值为负数，表示不储存该Cookie；值为正数，表示该Cookie的存储时间
+        cookie.setMaxAge(30);
+        //3. 设置Cookie 的作用范围
+        cookie.setPath(request.getContextPath());
+        //4. 调用response的一个方法把Cookie传给客户端
+        response.addCookie(cookie);
+        //5. 从浏览器读取Cookie
+        Cookie[] cookies = request.getCookies();
+    }
 }

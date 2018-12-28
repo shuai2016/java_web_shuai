@@ -500,16 +500,19 @@
        2. 如果设置里过期时间，浏览器会把cookie保存到硬盘上，关闭后再次打开浏览器，这些cookie依然有效直到超过设定的过期时间
        3. 存储在硬盘上的cookie可以在不同的浏览器进程间共享，比如两个IE窗口。而对于保存在内存的cookie，不同的浏览器有不同的处理方式
 
-    7. 代码
+    7. Cookie相关的API
 
        ```java
+       //1. 创建一个Cookie对象
        Cookie cookie = new Cookie("name","cookie001");
+       //2. setMaxAge：单位：秒，值为0，表示立即删除；值为负数，表示不储存该Cookie；值为正数，表示该Cookie的存储时间
        cookie.setMaxAge(30);
+       //3. 设置Cookie 的作用范围
+       cookie.setPath(request.getContextPath());
+       //4. 调用response的一个方法把Cookie传给客户端
        response.addCookie(cookie);
+       //5. 从浏览器读取Cookie
        Cookie[] cookies = request.getCookies();
-       for (Cookie cookie1 : cookies) {
-           System.out.println(cookie1.getName() + " : " + cookie1.getValue());
-       }
        ```
 
 44. 利用Cookie进行自动登录
@@ -520,7 +523,17 @@
 
     1. Cookie的默认作用范围
        1. 可以作用当前目录和当前目录的子目录，但不能作用于当前目录的上一级目录
+
     2. 设置Cookie的作用范围
+
+       ```java
+       Cookie cookie = new Cookie("cookiepath","cookiepathvalue");
+       cookie.setPath(request.getContextPath());
+       response.addCookie(cookie);
+       ```
+
+       1. 可以通过setPath方法来设置Cookie的作用范围
+       2. setPath设置为项目应用的根目录时，注意要有项目名
 
 47. Cookie小结
 
