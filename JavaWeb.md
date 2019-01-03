@@ -550,9 +550,50 @@
 
 49. HttpSession的生命周期
 
+    1. 什么时候创建 HttpSession对象
+
+       1. 对于JSP
+          1. 当前的JSP是客户端访问的当前WEB应用的第一个资源，且JSP的page指定的session属性的值为false，则服务器就不会为JSP创建一个HttpSession对象，session="false"表示当前JSP页面禁用sessoin隐含变量，但可以使用其它的显示HttpSession对象。
+          2. 当前JSP不是客户端访问的当前WEB应用的第一个资源，且其它页面已经创建一个HttpSession对象，则服务器不会为当前JSP页面创建一个新的HttpSession对象，而会把和当前会话关联的那个HttpSessoin对象返回给当前的JSP页面。
+       2. 对于Servlet
+          1. 若Servlet是客户端访问的第一个WEB应用的资源，则只有调用了request.getSession()或request.getSession(true)才会创建HttpSession对象
+
+    2. 如何获取HttpSession对象
+
+       1. request.getSession(boolean create)
+          1. create 为 false，若没有和当前 JSP 页面关联的HttpSession对象，则返回 null ，若有，返回对象，
+          2. request.getSession(true) 等同于 request.getSessoin()
+
+    3. 什么时候销毁HttpSession对象
+
+       1. 调用HttpSsession 的 invalidate() 方法，使HttpSession失效
+
+       2. 服务器卸载当前WEB应用
+
+       3. 超出HttpSsession的过期时间，setMaxInactiveInterval(时间，单位秒)
+
+          1. 在web.xml 文件中设置HttpSession的过期时间，单位为 分钟。
+
+             ```xml
+             <session-config>
+                 <session-timeout>30</session-timeout>
+             </session-config>
+             ```
+
+       4. 并不是关闭了浏览器就销毁了HttpSession
+
 50. HttpSession常用方法示例
 
+    1. 获取Session对象：request.getSession()、request.getSession(boolean create)
+    2. 属性相关的：setAttribute，getAttribute，removeAttrite
+    3. 使HttpSession失效：invalidate()
+    4. 设置其最大失效时长：setMaxInactiveInterval
+
 51. HttpSessionURL重写
+
+    1. HttpServletResponse接口中定义了两个用于完成URL重写的方法
+       1. encodeURL方法
+       2. encodeRedirectURL方法
 
 52. HttpSession小结（1）
 
@@ -560,9 +601,35 @@
 
 54. JavaWeb中的相对路径和绝对路径
 
+    1. JavaWEB中绝对路路径：相对于当前WEB应用的根路径（contextPath）的路径，即任何的路径都必须带上contextPath
+    2. “/”的意义：
+       1. 代表web应用的根路径：http://localhost:8080/contextPath/
+          1. 请求转发request.getRequestDispatcher("/path/b.jsp").forward(request,response)
+          2. web.xml文件中映射Servlet访问路径
+       2. 代表站点的根路径：http://localhost:8080/
+          1. 超链接
+          2. 表单中的action
+          3. 请求重定向：response.sendRedirect("/a.jsp")
+
 55. HttpSession之表单的重复提交
 
+    1. 产生原因
+       1. 在表单提交到一个Servlet，而Servlet又通过请求转发的方式响应了一个JSP（HTML）页面，此时地址栏还保留着Servlet的那个路径，在响应页点击“刷新”。
+       2. 在响应页面没有到达事，重复点击“提交”按钮
+       3. 点击”返回“，再点击“提交”
+    2. 如何避免表单重复提交：
+       1. 使用session
+       2. TokenProcessor
+
 56. HttpSession之验证码
+
+    1. 基本原理
+       1. 在元表单页面，生成一个验证码的图片，生成图片的同时，需要把该图片中的字符串放到session中
+       2. 在原表单页面，定义一个文本域，用于输入验证码
+       3. 在目标Servlet中，获取session和表单域中的验证码的值
+       4. 比较两个值是否一致：若一致，受理请求，且把session域中的验证码属性清除
+       5. 若不一致，则直接通过重定向的方式返回原表单页面，并提示用户”验证码错误“
+    2. google验证码：com.google.code.kaptcha.servlet.KaptchaServlet 
 
 57. HttpSession小结（2）
 
@@ -573,6 +640,11 @@
 60. EL详解
 
 61. 简单标签的HelloWorld
+
+    1. 自定义标签的开发与应用步骤
+       1. 编写完成标签功能的Java类（标签处理器）
+       2. 编写标签库描述（tld）文件，在tld文件中对自定义标签进行描述
+       3. 在JSP页面中导入和使用自定义标签
 
 62. 带属性的自定义标签
 
