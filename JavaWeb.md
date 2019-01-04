@@ -284,18 +284,18 @@
 
 10. HTTP协议GET和POST请求
 
-        1. HTTP简介
-         1. WEB浏览器也WEB服务器之间的一问一答的交互过程必须遵循一定的规则，这个规则就是HTTP协议
-         2. 超文本传输协议的简写，是TCP/IP协议集中的一个应用层协议，用于定义WEB浏览器与WEB服务器之间交换数据的过程以及数据本身的格式。
-        2. GET请求
-         1. 在浏览器地址输入某个URL地址或单击网页上的一个超链接时，浏览器发出的HTTP请求方式是GET
-         2. 如果网页中的\<form>表单元素的method属性被设置为了“GET”，浏览器提交这个FORM表单时生成的HTTP请求消息的请求方式也为GET。
-         3. 使用GET请求方式给WEB服务器传递参数的格式
-            1. http:/xxx/xx?name=lc&password=123
-         4. 使用GET方式传送的数据量一般限制在1KB以下。
-        3. POST请求
-         1. POST请求方式主要用于向WEB服务器端程序提交FORM表单中的数据：form表单的method置为POST
-         2. POST方式将各个表单字段元素及其数据作为HTTP消息的实体内容发送给WEB服务器，传送的数据量要比使用GET方式传送的数据量大得多。  
+  1. HTTP简介
+    1. WEB浏览器也WEB服务器之间的一问一答的交互过程必须遵循一定的规则，这个规则就是HTTP协议
+    2. 超文本传输协议的简写，是TCP/IP协议集中的一个应用层协议，用于定义WEB浏览器与WEB服务器之间交换数据的过程以及数据本身的格式。
+  2. GET请求
+       1. 在浏览器地址输入某个URL地址或单击网页上的一个超链接时，浏览器发出的HTTP请求方式是GET
+       2. 如果网页中的\<form>表单元素的method属性被设置为了“GET”，浏览器提交这个FORM表单时生成的HTTP请求消息的请求方式也为GET。
+       3. 使用GET请求方式给WEB服务器传递参数的格式
+          1. http:/xxx/xx?name=lc&password=123
+       4. 使用GET方式传送的数据量一般限制在1KB以下。
+   3. POST请求
+       1. POST请求方式主要用于向WEB服务器端程序提交FORM表单中的数据：form表单的method置为POST
+       2. POST方式将各个表单字段元素及其数据作为HTTP消息的实体内容发送给WEB服务器，传送的数据量要比使用GET方式传送的数据量大得多。  
 
 11. ServletRequest和ServletResponse
 
