@@ -31,7 +31,7 @@ public class ForEachTag extends SimpleTagSupport {
 	public void doTag() throws JspException, IOException {
 		System.out.println(var);
 		System.out.println(items instanceof List);
-		if(items instanceof List){
+		if(items instanceof List) {
 			List items = (List) this.items;
 			for (Object item : items) {
 				System.out.println(item);
