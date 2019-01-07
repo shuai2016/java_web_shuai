@@ -43,7 +43,7 @@ public class MyHttpServlet extends MyGenericServlet {
 
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
     }
 
