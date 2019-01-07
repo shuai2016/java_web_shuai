@@ -16,10 +16,14 @@ public class RedirectServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("RedirectServlet's doGet");
+
+		request.setAttribute("request_hello","hello123");
+		request.getSession().setAttribute("session_hello","hello456");
+
 		/**
 		 * 请求重定向
 		 * 直接调用 response 的 sendRedirect 方法
 		 */
-		response.sendRedirect("second");
+		response.sendRedirect(request.getContextPath()+"/test.jsp");
 	}
 }

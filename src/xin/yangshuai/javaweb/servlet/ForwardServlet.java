@@ -17,12 +17,16 @@ public class ForwardServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("ForwardServlet's doGet");
+
+		request.setAttribute("request_hello","hello123");
+		request.getSession().setAttribute("session_hello","hello456");
+
 		/**
 		 * 请求转发
 		 * 1. 调用 HttpServletRequest 的 getRequestDispatcher 方法获取 RequestDispatcher 对象
 		 * 2. 调用 RequestDispatcher 的 forward(request,response) 方法进行请求的转发
 		 */
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/second");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/test.jsp");
 		dispatcher.forward(request,response);
 	}
 }

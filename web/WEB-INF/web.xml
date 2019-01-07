@@ -15,6 +15,11 @@
         <param-value>jdbc:mysql:///test</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </context-param>
+
     <!-- 配置和映射Servlet -->
     <servlet>
         <!--Servlet 注册的名字-->
@@ -142,5 +147,45 @@
         <servlet-name>myCaptchaServlet</servlet-name>
         <url-pattern>/myCaptcha</url-pattern>
     </servlet-mapping>
+
+    <!--注册Filter-->
+    <filter>
+        <filter-name>helloFilter</filter-name>
+        <filter-class>xin.yangshuai.javaweb.filter.HelloFilter</filter-class>
+        <init-param>
+            <param-name>name</param-name>
+            <param-value>hello</param-value>
+        </init-param>
+    </filter>
+
+    <!--映射Filter-->
+    <filter-mapping>
+        <filter-name>helloFilter</filter-name>
+        <url-pattern>/hello</url-pattern>
+    </filter-mapping>
+
+    <!--注册Filter-->
+    <filter>
+        <filter-name>secondFilter</filter-name>
+        <filter-class>xin.yangshuai.javaweb.filter.SecondFilter</filter-class>
+    </filter>
+
+    <!--映射Filter-->
+    <filter-mapping>
+        <filter-name>secondFilter</filter-name>
+        <url-pattern>/hello</url-pattern>
+    </filter-mapping>
+
+    <!--注册Filter-->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>xin.yangshuai.javaweb.filter.EncodingFilter</filter-class>
+    </filter>
+
+    <!--映射Filter-->
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 </web-app>

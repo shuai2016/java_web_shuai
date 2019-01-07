@@ -3,6 +3,7 @@ package xin.yangshuai.javaweb.servlet;
 import javax.servlet.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 
 /**
@@ -22,7 +23,7 @@ public class HelloServlet implements Servlet {
 		System.out.println("HelloServlet's init");
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();
-		while (names.hasMoreElements()){
+		while (names.hasMoreElements()) {
 			String name = names.nextElement();
 			String value = servletConfig.getInitParameter(name);
 			System.out.println(name + " : " + value);
@@ -31,14 +32,14 @@ public class HelloServlet implements Servlet {
 		String servletName = servletConfig.getServletName();
 		System.out.println(servletName);
 
-        ServletContext servletContext = servletConfig.getServletContext();
+		ServletContext servletContext = servletConfig.getServletContext();
 
-        Enumeration<String> initParameterNames = servletContext.getInitParameterNames();
-        while (initParameterNames.hasMoreElements()){
-            String name = initParameterNames.nextElement();
-            String value = servletContext.getInitParameter(name);
-            System.out.println("ServletContext, " + name + " : " + value);
-        }
+		Enumeration<String> initParameterNames = servletContext.getInitParameterNames();
+		while (initParameterNames.hasMoreElements()) {
+			String name = initParameterNames.nextElement();
+			String value = servletContext.getInitParameter(name);
+			System.out.println("ServletContext, " + name + " : " + value);
+		}
 
 		String realPath = servletContext.getRealPath("/test.txt");
 		System.out.println("realPath : " + realPath);
@@ -58,7 +59,9 @@ public class HelloServlet implements Servlet {
 	}
 
 	@Override
-	public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
+	public void service(ServletRequest request, ServletResponse response) throws IOException {
+		PrintWriter writer = response.getWriter();
+		writer.println("Hello World !");
 		System.out.println("HelloServlet's service");
 	}
 

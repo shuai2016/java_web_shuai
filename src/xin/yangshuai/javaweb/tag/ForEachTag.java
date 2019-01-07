@@ -1,10 +1,8 @@
 package xin.yangshuai.javaweb.tag;
 
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +14,7 @@ import java.util.Map;
  */
 public class ForEachTag extends SimpleTagSupport {
 
-	private Object items ;
+	private Object items;
 	private String var;
 
 	public void setItems(Object items) {
@@ -31,19 +29,19 @@ public class ForEachTag extends SimpleTagSupport {
 	public void doTag() throws JspException, IOException {
 		System.out.println(var);
 		System.out.println(items instanceof List);
-		if(items instanceof List) {
+		if (items instanceof List) {
 			List items = (List) this.items;
 			for (Object item : items) {
 				System.out.println(item);
-				getJspContext().setAttribute(var,item);
+				getJspContext().setAttribute(var, item);
 				getJspBody().invoke(null);
 			}
 		}
-		if(items instanceof Map){
+		if (items instanceof Map) {
 			Map items = (Map) this.items;
 			for (Object o : items.entrySet()) {
 				System.out.println(o);
-				getJspContext().setAttribute(var,o);
+				getJspContext().setAttribute(var, o);
 				getJspBody().invoke(null);
 			}
 		}

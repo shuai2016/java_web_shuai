@@ -285,17 +285,16 @@
 10. HTTP协议GET和POST请求
 
   1. HTTP简介
-    1. WEB浏览器也WEB服务器之间的一问一答的交互过程必须遵循一定的规则，这个规则就是HTTP协议
-    2. 超文本传输协议的简写，是TCP/IP协议集中的一个应用层协议，用于定义WEB浏览器与WEB服务器之间交换数据的过程以及数据本身的格式。
+     1. WEB浏览器也WEB服务器之间的一问一答的交互过程必须遵循一定的规则，这个规则就是HTTP协议
+     2. 超文本传输协议的简写，是TCP/IP协议集中的一个应用层协议，用于定义WEB浏览器与WEB服务器之间交换数据的过程以及数据本身的格式。
   2. GET请求
-       1. 在浏览器地址输入某个URL地址或单击网页上的一个超链接时，浏览器发出的HTTP请求方式是GET
-       2. 如果网页中的\<form>表单元素的method属性被设置为了“GET”，浏览器提交这个FORM表单时生成的HTTP请求消息的请求方式也为GET。
-       3. 使用GET请求方式给WEB服务器传递参数的格式
-          1. http:/xxx/xx?name=lc&password=123
-       4. 使用GET方式传送的数据量一般限制在1KB以下。
-   3. POST请求
-       1. POST请求方式主要用于向WEB服务器端程序提交FORM表单中的数据：form表单的method置为POST
-       2. POST方式将各个表单字段元素及其数据作为HTTP消息的实体内容发送给WEB服务器，传送的数据量要比使用GET方式传送的数据量大得多。  
+     1. 在浏览器地址输入某个URL地址或单击网页上的一个超链接时，浏览器发出的HTTP请求方式是GET
+     2. 如果网页中的\<form>表单元素的method属性被设置为了“GET”，浏览器提交这个FORM表单时生成的HTTP请求消息的请求方式也为GET。
+     	. 使用GET请求方式给WEB服务器传递参数的格式：  	http:/xxx/xx?name=lc&password=123
+     4. 使用GET方式传送的数据量一般限制在1KB以下。
+  3. POST请求
+     1. POST请求方式主要用于向WEB服务器端程序提交FORM表单中的数据：form表单的method置为POST
+     2. POST方式将各个表单字段元素及其数据作为HTTP消息的实体内容发送给WEB服务器，传送的数据量要比使用GET方式传送的数据量大得多。  
 
 11. ServletRequest和ServletResponse
 
@@ -370,19 +369,6 @@
 
 18. JSP页面的9个隐含对象
 
-    1. 具体9个隐含对象
-       1. request：HttpServletRequest
-       2. response：HttpServletResponse
-       3. pageContext：PageContext，可以从该对象获取到其它8个隐含对象
-       4. session：HttpSession
-       5. application：ServletContext
-       6. config：ServletConfig
-       7. out：JspWriter
-       8. page：指向当前JSP对应的Servlet对象的引用，但为Object类型，只能调用Object类的方法（几乎不使用）
-       9. exception
-    2. 对属性的作用域的范围从小到大
-       1. pageContext，request，session，application
-
 19. JSP语法
 
 20. 域对象的属性操作
@@ -441,6 +427,28 @@
 25. JSP标签
 
 26. 中文乱码问题
+
+    1. post请求
+
+       ```java
+       request.setCharacterEncoding("UTF-8");
+       ```
+
+    2. get请求
+
+       1. 修改Tomcat 的 server.xml 文件
+
+          ```xml
+          <Connector port="8080" protocol="HTTP/1.1"
+                         connectionTimeout="20000"
+                         redirectPort="8443" useBodyEncodingForURI="true"/>
+          ```
+
+       2. 设置请求编码
+
+          ```java
+          request.setCharacterEncoding("UTF-8");
+          ```
 
 27. JSP小结（2）
 
@@ -615,35 +623,9 @@
 
 54. JavaWeb中的相对路径和绝对路径
 
-    1. JavaWEB中绝对路路径：相对于当前WEB应用的根路径（contextPath）的路径，即任何的路径都必须带上contextPath
-    2. “/”的意义：
-       1. 代表web应用的根路径：http://localhost:8080/contextPath/
-          1. 请求转发request.getRequestDispatcher("/path/b.jsp").forward(request,response)
-          2. web.xml文件中映射Servlet访问路径
-       2. 代表站点的根路径：http://localhost:8080/
-          1. 超链接
-          2. 表单中的action
-          3. 请求重定向：response.sendRedirect("/a.jsp")
-
 55. HttpSession之表单的重复提交
 
-    1. 产生原因
-       1. 在表单提交到一个Servlet，而Servlet又通过请求转发的方式响应了一个JSP（HTML）页面，此时地址栏还保留着Servlet的那个路径，在响应页点击“刷新”。
-       2. 在响应页面没有到达事，重复点击“提交”按钮
-       3. 点击”返回“，再点击“提交”
-    2. 如何避免表单重复提交：
-       1. 使用session
-       2. TokenProcessor
-
 56. HttpSession之验证码
-
-    1. 基本原理
-       1. 在元表单页面，生成一个验证码的图片，生成图片的同时，需要把该图片中的字符串放到session中
-       2. 在原表单页面，定义一个文本域，用于输入验证码
-       3. 在目标Servlet中，获取session和表单域中的验证码的值
-       4. 比较两个值是否一致：若一致，受理请求，且把session域中的验证码属性清除
-       5. 若不一致，则直接通过重定向的方式返回原表单页面，并提示用户”验证码错误“
-    2. google验证码：com.google.code.kaptcha.servlet.KaptchaServlet 
 
 57. HttpSession小结（2）
 
@@ -654,11 +636,6 @@
 60. EL详解
 
 61. 简单标签的HelloWorld
-
-    1. 自定义标签的开发与应用步骤
-       1. 编写完成标签功能的Java类（标签处理器）
-       2. 编写标签库描述（tld）文件，在tld文件中对自定义标签进行描述
-       3. 在JSP页面中导入和使用自定义标签
 
 62. 带属性的自定义标签
 
@@ -682,13 +659,87 @@
 
 72. Filter概述
 
+    1. 过滤器简介
+
+       1. Filter 的基本功能是对Servlet容器调用Servlet的过程进行拦截，从而在Servlet进行响应处理的前后实现一些特殊的功能
+       2. 在Servlet API 中定义了三个接口类提供给开发人员编写Filter程序：Filter，FilterChain，FilterConfig
+       3. Filter程序是一个实现了Filter接口的Java类，与Servlet程序相似，它由Servlet容器进行调用和执行
+       4. Filter程序需要在web.xml文件中进行注册和设置它所能拦截的资源：Filter程序可以拦截Jsp，Servlet，静态图片文件和静态html文件
+       5. 与开发Servlet不同的是，Filter接口并没有相应的实现类可供继承，要开发过滤器，只能直接实现Filter接口。
+
+    2. 创建一个Filter
+
+       1. 创建一个Filter类
+
+          ```java
+          public class HelloFilter implements Filter {
+             @Override
+             public void init(FilterConfig filterConfig) throws ServletException {
+                System.out.println("HelloFilter's init...");
+             }
+             @Override
+             public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+                System.out.println("HelloFilter's doFilter...");
+             }
+             @Override
+             public void destroy() {
+                System.out.println("HelloFilter's destroy...");
+             }
+          }
+          ```
+
+       2. 在web.xml文件中配置和注册Filter
+
+          ```xml
+          <!--注册Filter-->
+          <filter>
+              <filter-name>helloFilter</filter-name>
+              <filter-class>xin.yangshuai.javaweb.filter.HelloFilter</filter-class>
+          </filter>
+          <!--映射Filter-->
+          <filter-mapping>
+              <filter-name>helloFilter</filter-name>
+              <url-pattern>/hello</url-pattern>
+          </filter-mapping>
+          ```
+
+          1. 其中url-pattern 指定该Filter 可以拦截哪些资源，即可以通过哪些url 访问到该Filter
+
+       3. 相关API
+
+          1. public void init(FilterConfig filterConfig)：类似于Servlet 的init方法，在创建Filter对象后，立即被调用，且只被调用一次，该方法用于对当前的Filter进行初始化操作。Filter实例是单例的。
+             1. FilterConfig 类似于 ServletConfig
+             2. 可以在web.xml 文件中配置当前Filter 的初始化参数，配置方式也和Servlet 类似
+          2. public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)：正在 Filter 的逻辑代码需要编写在该方法中，每次拦截都会调用该方法。
+             1. FilterChain：Filter链，多个 Filter 可以构成一个Filter链。
+                1. doFilter(ServletRequest var1, ServletResponse var2)：把请求传给Filter链的下个Filter，若当前Filter是Filter链的最后一个Filter，将把请求给到目标Servlet（或JSP）
+                2. 多个Filter 拦截的顺序和filter-mapping配置的顺序有关，靠前的先被调用
+          3. public void destroy()：释放当前Filter所占用的资源费方法。在Filter被销毁之前被调用，且只被调用一次
+
 73. 创建HttpFilter
 
 74. 理解多个Filter代码的执行顺序
 
 75. 配置Filter的dispatcher节点
 
+    1. 指定过滤器所拦截的资源被Servlet 容器调用的方式，可以是REQUEST,INCLUDE,FORWARD和ERROR之一，默认REQUEST，可以设置多个dispatcher子元素来指定Filter 对资源的多种调用方式进行拦截
+    2. 注意：
+       1. JSP页面，配置指令指定的errorPage跳转页面属于转发（FORWARD）
+       2. ERROR：如果目标资源是通过声明式异常处理机制调用的，那么该过滤器将被调用，除此之外，过滤器不会被调用。在web.xml 文件通过error-page节点进行声明。
+
 76. 禁用浏览器缓存的过滤器
+
+    ```java
+    public class NoCacheFilter extends MyHttpFilter {
+       @Override
+       public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+          response.setDateHeader("Expires",-1);
+          response.setHeader("Cache-Control","no-cache");
+          response.setHeader("Pragma","no-cache");
+          chain.doFilter(request,response);
+       }
+    }
+    ```
 
 77. 字符编码过滤器
 
