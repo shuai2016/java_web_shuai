@@ -200,8 +200,9 @@
         <url-pattern>/content/content.jsp</url-pattern>
     </filter-mapping>
 
+    <!--配置Listener-->
     <listener>
-        <listener-class>xin.yangshuai.javaweb.listener.HelloServletContextListener</listener-class>
+        <listener-class>xin.yangshuai.javaweb.listener.HelloListener</listener-class>
     </listener>
 
 </web-app>
