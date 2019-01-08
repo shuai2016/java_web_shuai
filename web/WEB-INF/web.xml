@@ -188,4 +188,16 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--注册Filter-->
+    <filter>
+        <filter-name>contentFilter</filter-name>
+        <filter-class>xin.yangshuai.javaweb.filter.ContentFilter</filter-class>
+    </filter>
+
+    <!--映射Filter-->
+    <filter-mapping>
+        <filter-name>contentFilter</filter-name>
+        <url-pattern>/content/content.jsp</url-pattern>
+    </filter-mapping>
+
 </web-app>
