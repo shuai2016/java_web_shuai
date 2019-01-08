@@ -757,11 +757,80 @@
 
 84. HttpServletRequestWrapper
 
+    ```java
+    public class MyHttpServletRequest extends HttpServletRequestWrapper {
+       public MyHttpServletRequest(HttpServletRequest request) {
+          super(request);
+       }
+       @Override
+       public String getParameter(String name) {
+          String parameter = super.getParameter(name);
+          return parameter + " Hello World !";
+       }
+    }
+    ```
+
+    1. Servlet API 中提供了一个HttpServletRequestWrapper类来包装原始的request对象，HttpServletRequestWrapper类实现了HttpServletRequest接口中的所有方法，这些方法的内部实现都是仅仅调用了一下所包装的request对象的对应方法
+
 85. Filter小结（2）
 
 86. 监听域对象创建和销毁的Listener
 
+    1. 简介
+
+       1. 监听器：专门用于对其它对象身上发生的事件或状态改变进行监听和相应处理的对象，当被监听的对象发生情况时立即采取相应的行动。
+       2. Servlet监听器：Servlet规范中定义的一种特殊类，它用于监听web应用程序中的ServletContext，HttpSession 和 ServletRequest 等域对象的创建与销毁事件，以及监听这些域对象中的属性发生修改的事件。
+
+    2. 按监听的事件类型 Servlet 监听器可分为如下三种类型
+
+       1. 监听域对象自身的创建和销毁的事件监听器：
+
+          1. 创建一个实现ServletContextListener 接口的类
+
+             ```java
+             public class HelloServletContextListener implements ServletContextListener {
+                @Override
+                public void contextInitialized(ServletContextEvent servletContextEvent) {
+                   System.out.println("ServletContext 对象被创建。" + servletContextEvent.getServletContext());
+                }
+                @Override
+                public void contextDestroyed(ServletContextEvent servletContextEvent) {
+                   System.out.println("ServletContext 对象被销毁。" + servletContextEvent.getServletContext());
+                }
+             }
+             ```
+
+          2. 在web.xml 文件中配置 Listener
+
+             ```xml
+             <listener>
+                 <listener-class>xin.yangshuai.javaweb.listener.HelloServletContextListener</listener-class>
+             </listener>
+             ```
+
+          3. 使用场景
+
+             1. ServletContextListener 是最常见的 Listener，可以在当 WEB 应用被加载是对当前 WEB 应用的相关资源进行初始化操作：创建数据库连接池，创建Spring 的 IOC 容器 ，读取当前 WEB 应用的初始化参数 ...
+
+          4. API
+
+             1. public void contextInitialized(ServletContextEvent servletContextEvent)：ServletContext 对象被创建（即当前 WEB 应用被加载）的时候，Servlet 容器调用该方法。
+                1. ServletContextEvent：getServletContext() 获取 ServletContext
+             2. public void contextDestroyed(ServletContextEvent servletContextEvent)：ServletContext 对象被销毁之前（即当前 WEB 应用被卸载）的时候，Servlet 容器调用该方法。
+
+          5. 类似的ServletRequestListener、HttpSessionListener
+
+       2. 监听域对象中的属性的增加和删除的事件监听器
+
+       3. 监听绑定到 HttpSession 域中的某个对象的状态的事件监听器
+
 87. 通过Listener理解域对象生命周期
+
+    1. request：是一个请求，当一个响应返回时，即被销毁。当发送一个请求时被创建。注意，请求转发的过程是一个request 对象。重定向是两个请求。
+    2. session：当第一次访问 WEB 应用的一个JSP 或 Servlet 时，且该 JSP 或 Servlet 中还需要创建 session 对象，此时服务器会创建一个 session 对象。
+       1. session 销毁：session 过期、直接 调用 session 的 invalidate 方法、当前 web 应用被卸载（session 可以被持久化）
+       2. 关闭浏览器，并不意味着 session 销毁，还可以通过 sessionid 找到服务器中的 session 对象。
+       3. application：贯穿于当前的 WEB 应用的生命周期，当前 WEB 应用被加载时创建 application 对象，当前 WEB 应用被卸载时销毁 application 对象。
 
 88. 其它的Servlet监听器
 
