@@ -1,5 +1,7 @@
 package xin.yangshuai.javaweb.servlet;
 
+import xin.yangshuai.Customer;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,27 @@ public class SecondServlet extends MyHttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        System.out.println("测试属性************start*******************************");
+
+        System.out.println("测试属性************添加属性start*******************************");
+        getServletContext().setAttribute("contextHello",new Customer("张三",24));
+        request.getSession().setAttribute("sessionHello",new Customer("张三",24));
+        request.setAttribute("requestHello",new Customer("张三",24));
+        System.out.println("测试属性************添加属性end*********************************");
+        System.out.println("测试属性************替换属性start*******************************");
+        getServletContext().setAttribute("contextHello",new Customer("李四",20));
+        request.getSession().setAttribute("sessionHello",new Customer("李四",20));
+        request.setAttribute("requestHello",new Customer("李四",20));
+        System.out.println("测试属性************替换属性end*********************************");
+        System.out.println("测试属性************移除属性start*******************************");
+        getServletContext().removeAttribute("contextHello");
+        request.getSession().removeAttribute("sessionHello");
+        request.removeAttribute("requestHello");
+        System.out.println("测试属性************移除属性end*********************************");
+
+        System.out.println("测试属性************end*********************************");
+
         HttpSession session = request.getSession(false);
         PrintWriter writer = response.getWriter();
         writer.println("SecondServlet's doGet");

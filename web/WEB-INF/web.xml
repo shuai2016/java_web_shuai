@@ -61,6 +61,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>thirdServlet</servlet-name>
+        <servlet-class>xin.yangshuai.javaweb.servlet.ThirdServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>thirdServlet</servlet-name>
+        <url-pattern>/third</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>xin.yangshuai.javaweb.servlet.LoginServlet1</servlet-class>
     </servlet>
@@ -202,7 +212,7 @@
 
     <!--配置Listener-->
     <listener>
-        <listener-class>xin.yangshuai.javaweb.listener.HelloListener</listener-class>
+        <listener-class>xin.yangshuai.javaweb.listener.HelloAttributeListener</listener-class>
     </listener>
 
 </web-app>

@@ -834,6 +834,115 @@
 
 88. 其它的Servlet监听器
 
+    1. 域对象中属性的变更的事件监听器
+
+       ```java
+       public class HelloAttributeListener implements ServletContextAttributeListener,HttpSessionAttributeListener,ServletRequestAttributeListener {
+          @Override
+          public void attributeAdded(ServletContextAttributeEvent servletContextAttributeEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("context属性添加：");
+             System.out.println(servletContextAttributeEvent.getName());
+             System.out.println(servletContextAttributeEvent.getValue());
+             System.out.println("---------------------------------------------------");
+          }
+       
+          @Override
+          public void attributeRemoved(ServletContextAttributeEvent servletContextAttributeEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("context属性移除：");
+             System.out.println(servletContextAttributeEvent.getName());
+             System.out.println(servletContextAttributeEvent.getValue());
+             System.out.println("---------------------------------------------------");
+          }
+       
+          @Override
+          public void attributeReplaced(ServletContextAttributeEvent servletContextAttributeEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("context属性替换：");
+             System.out.println(servletContextAttributeEvent.getName());
+             System.out.println(servletContextAttributeEvent.getValue());
+             System.out.println("---------------------------------------------------");
+          }
+       
+          @Override
+          public void attributeAdded(ServletRequestAttributeEvent servletRequestAttributeEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("request属性添加：");
+             System.out.println(servletRequestAttributeEvent.getName());
+             System.out.println(servletRequestAttributeEvent.getValue());
+             System.out.println("---------------------------------------------------");
+          }
+       
+          @Override
+          public void attributeRemoved(ServletRequestAttributeEvent servletRequestAttributeEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("request属性移除：");
+             System.out.println(servletRequestAttributeEvent.getName());
+             System.out.println(servletRequestAttributeEvent.getValue());
+             System.out.println("---------------------------------------------------");
+          }
+       
+          @Override
+          public void attributeReplaced(ServletRequestAttributeEvent servletRequestAttributeEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("request属性替换：");
+             System.out.println(servletRequestAttributeEvent.getName());
+             System.out.println(servletRequestAttributeEvent.getValue());
+             System.out.println("---------------------------------------------------");
+          }
+       
+          @Override
+          public void attributeAdded(HttpSessionBindingEvent httpSessionBindingEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("session属性添加：");
+             System.out.println(httpSessionBindingEvent.getName());
+             System.out.println(httpSessionBindingEvent.getValue());
+             System.out.println(httpSessionBindingEvent.getSession().getId());
+             System.out.println("---------------------------------------------------");
+          }
+       
+          @Override
+          public void attributeRemoved(HttpSessionBindingEvent httpSessionBindingEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("session属性移除：");
+             System.out.println(httpSessionBindingEvent.getName());
+             System.out.println(httpSessionBindingEvent.getValue());
+             System.out.println(httpSessionBindingEvent.getSession().getId());
+             System.out.println("---------------------------------------------------");
+          }
+       
+          @Override
+          public void attributeReplaced(HttpSessionBindingEvent httpSessionBindingEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("session属性替换：");
+             System.out.println(httpSessionBindingEvent.getName());
+             System.out.println(httpSessionBindingEvent.getValue());
+             System.out.println(httpSessionBindingEvent.getSession().getId());
+             System.out.println("---------------------------------------------------");
+          }
+       }
+       ```
+
+       1. 域对象中属性的变更的事件监听器就是用来监听ServletContext，HttpSession，ServletRequest这个三个对象中的属性变更信息（添加，替换，移除）事件的监听器。
+       2. 这三个监听器接口分别是ServletContextAttributeListener，HttpSessionAttributeListener，ServletRequestAttributeListener，这三个接口中都定义了三个方法来处理被监听对象中的属性的增加，删除和替换的事件，同一个事件在这个三个接口中对应的方法名称完全相同，只是接受的参数类型不同。
+       3. 这三个监听器较少被使用
+       4. API：ServletContextAttributeEvent、ServletRequestAttributeEvent、HttpSessionBindingEvent
+          1. getName()：获取属性的名字
+          2. getValue()：获取属性的值（attributeReplaced方法中获取的是旧值）
+
+    2. 感知Session绑定的事件监听器
+
+       1. 保存在Session域中的对象可以有多种状态：绑定到Session中；从Session域中解除绑定；随Session对象持久化到一个存储设备中；随Session对象从一个存储设备中恢复
+       2. Servlet规范中定义了两个特殊的监听器接口来帮助JavaBean对象了解自己在Session域中的这些状态：HttpSessionBindingListener 接口和 HttpSessionActivationListener 接口，实现这两个接口的类不需要web.xml文件中进行注册
+       3. HttpSessionBindingListener接口：实现了HttpSessionBindingListener接口的JavaBean对象可以感知自己被绑定到Session中和从Session中解除绑定  的事件
+          1. 绑定：调用public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent)方法
+          2. 解除绑定：调用public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent)方法
+          3. 该监听器较少被使用
+       4. HttpSessionActivationListener接口：实现了HttpSessionActivationListener 接口的JavaBean对象可以感知自己被活化和钝化的事件
+          1. 钝化之前：调用public void sessionWillPassivate(HttpSessionEvent httpSessionEvent)方法
+          2. 活化之后：调用public void sessionDidActivate(HttpSessionEvent httpSessionEvent)方法
+
 89. Servlet监听器小结
 
 90. 文件上传基础
