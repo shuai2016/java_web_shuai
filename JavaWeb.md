@@ -284,23 +284,23 @@
 
 10. HTTP协议GET和POST请求
 
-  1. HTTP简介
-     1. WEB浏览器也WEB服务器之间的一问一答的交互过程必须遵循一定的规则，这个规则就是HTTP协议
-     2. 超文本传输协议的简写，是TCP/IP协议集中的一个应用层协议，用于定义WEB浏览器与WEB服务器之间交换数据的过程以及数据本身的格式。
-  2. GET请求
-     1. 在浏览器地址输入某个URL地址或单击网页上的一个超链接时，浏览器发出的HTTP请求方式是GET
-     2. 如果网页中的\<form>表单元素的method属性被设置为了“GET”，浏览器提交这个FORM表单时生成的HTTP请求消息的请求方式也为GET。
-     	. 使用GET请求方式给WEB服务器传递参数的格式：  	http:/xxx/xx?name=lc&password=123
-     4. 使用GET方式传送的数据量一般限制在1KB以下。
-  3. POST请求
-     1. POST请求方式主要用于向WEB服务器端程序提交FORM表单中的数据：form表单的method置为POST
-     2. POST方式将各个表单字段元素及其数据作为HTTP消息的实体内容发送给WEB服务器，传送的数据量要比使用GET方式传送的数据量大得多。  
+  11. HTTP简介
+      1. WEB浏览器也WEB服务器之间的一问一答的交互过程必须遵循一定的规则，这个规则就是HTTP协议
+      2. 超文本传输协议的简写，是TCP/IP协议集中的一个应用层协议，用于定义WEB浏览器与WEB服务器之间交换数据的过程以及数据本身的格式。
+  12. GET请求
+      1. 在浏览器地址输入某个URL地址或单击网页上的一个超链接时，浏览器发出的HTTP请求方式是GET
+      2. 如果网页中的\<form>表单元素的method属性被设置为了“GET”，浏览器提交这个FORM表单时生成的HTTP请求消息的请求方式也为GET。
+      	. 使用GET请求方式给WEB服务器传递参数的格式：  	http:/xxx/xx?name=lc&password=123
+      4. 使用GET方式传送的数据量一般限制在1KB以下。
+  13. POST请求
+      1. POST请求方式主要用于向WEB服务器端程序提交FORM表单中的数据：form表单的method置为POST
+      2. POST方式将各个表单字段元素及其数据作为HTTP消息的实体内容发送给WEB服务器，传送的数据量要比使用GET方式传送的数据量大得多。  
 
-11. ServletRequest和ServletResponse
+14. ServletRequest和ServletResponse
 
     1. 这个两个接口的实现类都是服务器给予实现的，并在服务器调用service方法时传入
 
-12. ServletRequest
+15. ServletRequest
 
     1. 封装了请求信息，可以从中获取到任何的请求信息
 
@@ -326,7 +326,7 @@
        String servletPath = httpServletRequest.getServletPath();
        ```
 
-13. ServletResponse
+16. ServletResponse
 
     1. 封装了响应信息，如果想给用户什么响应，具体可以是该接口的方法实现
 
@@ -345,7 +345,7 @@
 
        1. `void sendRedirect(String var1) `：请求重定向
 
-14. GenericServlet
+17. GenericServlet
 
     1. 是一个Servlet，是Servlet接口和ServletConfig 接口的实现类，但是一个抽象类，其中的service方法为抽象方法
     2. 如果新建的Servlet程序直接继承GenericServlet会使开发更简洁
@@ -356,24 +356,24 @@
        4. 不建议直接覆盖`init(ServletConfig config) `，因为如果忘记编写super.init(ServletConfig)，而且用了ServletConfig接口的方法，则会出现空指针异常。
        5. 新建的init()并非Servlet的生命周期方法，而init(ServletConfig)使生命周期相关的方法
 
-15. HttpServlet
+18. HttpServlet
 
     1. 是一个Servlet，继承自GenericServlet，针对于HTTP协议所定制
     2. 在service()方法中直接把ServletRequest和ServletResponse转为HttpServletRequest和HttpServletResponse，并调用了重载的service(HttpServletRequest,HttpServletResponse)，在重载的service(HttpServletRequest,HttpServletResponse)方法中获取了请求方式：request.getMethod()，根据请求方式又创建了doXxx()方法（比如doGet，doPost）
     3. 实际开发中，直接继承HttpServlet，并根据请求方式覆写doXxx()方法即可。
     4. 好处：直接有针对性的覆盖doXxx()方法；直接使用HttpServletRequest和HttpServletResponse，不再需要强转
 
-16. 小结及练习
+19. 小结及练习
 
-17. JSP概述
+20. JSP概述
 
-18. JSP页面的9个隐含对象
+21. JSP页面的9个隐含对象
 
-19. JSP语法
+22. JSP语法
 
-20. 域对象的属性操作
+23. 域对象的属性操作
 
-21. 请求的转发和重定向
+24. 请求的转发和重定向
 
     1. 代码
 
@@ -418,15 +418,15 @@
           1. 转发：/ 代表的是当前WEB应用的根目录
           2. 重定向：/ 代表的是当前WEB站点的根目录
 
-22. JSP小结（1）
+25. JSP小结（1）
 
-23. page指令
+26. page指令
 
-24. include指令
+27. include指令
 
-25. JSP标签
+28. JSP标签
 
-26. 中文乱码问题
+29. 中文乱码问题
 
     1. post请求
 
@@ -450,39 +450,39 @@
           request.setCharacterEncoding("UTF-8");
           ```
 
-27. JSP小结（2）
+30. JSP小结（2）
 
-28. MVC设计模式
+31. MVC设计模式
 
-29. MVC案例之查询
+32. MVC案例之查询
 
-30. MVC案例之删除
+33. MVC案例之删除
 
-31. MVC案例之架构分析
+34. MVC案例之架构分析
 
-32. MVC案例之DAO层设计
+35. MVC案例之DAO层设计
 
-33. MVC案例之DAO层实现
+36. MVC案例之DAO层实现
 
-34. MVC案例之多个请求对应一个Servlet
+37. MVC案例之多个请求对应一个Servlet
 
-35. MVC案例之（模糊）查询
+38. MVC案例之（模糊）查询
 
-36. MVC案例之删除操作
+39. MVC案例之删除操作
 
-37. MVC案例之小结（1）
+40. MVC案例之小结（1）
 
-38. MVC案例之新增Customer
+41. MVC案例之新增Customer
 
-39. MVC案例之修改思路分析
+42. MVC案例之修改思路分析
 
-40. MVC案例之修改代码实现
+43. MVC案例之修改代码实现
 
-41. MVC案例之通过配置切换底层存储源
+44. MVC案例之通过配置切换底层存储源
 
-42. MVC案例之小结（2）
+45. MVC案例之小结（2）
 
-43. Cookie概述
+46. Cookie概述
 
     1. 提出问题
        1. HTTP协议是一种无状态的协议
@@ -537,11 +537,11 @@
        Cookie[] cookies = request.getCookies();
        ```
 
-44. 利用Cookie进行自动登录
+47. 利用Cookie进行自动登录
 
-45. 利用Cookie显示最近浏览的商品
+48. 利用Cookie显示最近浏览的商品
 
-46. 设置Cookie的作用路径
+49. 设置Cookie的作用路径
 
     1. Cookie的默认作用范围
 
@@ -558,9 +558,9 @@
        1. 可以通过setPath方法来设置Cookie的作用范围
        2. setPath设置为项目应用的根目录时，注意要有项目名
 
-47. Cookie小结
+50. Cookie小结
 
-48. HttpSession概述
+51. HttpSession概述
 
     1. Session机制
        1. Session的含义是指一类用来在客户端与服务器之间保持状态的解决方案。有时候Session也用来指这种解决方案的存储结构。session机制采用的是在服务器端保持HTTP状态信息的方案
@@ -570,7 +570,7 @@
        1. 保存session id的方式可以采用cookie，这样在交互过程中浏览器可以自动的按照规则把这个标识发送给服务器。
        2. 由于cookie可以被人为的禁用，必须有其它的机制以便在cookie被禁用时仍然能够把session id传递回服务器，经常采用的一种技术叫做URL重写，就是把session id附加在URL路径的后面，附加的方式也有两种，一种时作为URL路径的附加信息，另一种是作为查询字符串附加在URL后面。网络在整个交互过程中始终保持状态，就必须在每个客户端可能请求的路径后面都包含这个session id
 
-49. HttpSession的生命周期
+52. HttpSession的生命周期
 
     1. 什么时候创建 HttpSession对象
 
@@ -604,60 +604,60 @@
 
        4. 并不是关闭了浏览器就销毁了HttpSession
 
-50. HttpSession常用方法示例
+53. HttpSession常用方法示例
 
     1. 获取Session对象：request.getSession()、request.getSession(boolean create)
     2. 属性相关的：setAttribute，getAttribute，removeAttrite
     3. 使HttpSession失效：invalidate()
     4. 设置其最大失效时长：setMaxInactiveInterval
 
-51. HttpSessionURL重写
+54. HttpSessionURL重写
 
     1. HttpServletResponse接口中定义了两个用于完成URL重写的方法
        1. encodeURL方法
        2. encodeRedirectURL方法
 
-52. HttpSession小结（1）
+55. HttpSession小结（1）
 
-53. HttpSession之简易购物车
+56. HttpSession之简易购物车
 
-54. JavaWeb中的相对路径和绝对路径
+57. JavaWeb中的相对路径和绝对路径
 
-55. HttpSession之表单的重复提交
+58. HttpSession之表单的重复提交
 
-56. HttpSession之验证码
+59. HttpSession之验证码
 
-57. HttpSession小结（2）
+60. HttpSession小结（2）
 
-58. 使用JavaBean
+61. 使用JavaBean
 
-59. EL语法
+62. EL语法
 
-60. EL详解
+63. EL详解
 
-61. 简单标签的HelloWorld
+64. 简单标签的HelloWorld
 
-62. 带属性的自定义标签
+65. 带属性的自定义标签
 
-63. 带标签体的自定义标签
+66. 带标签体的自定义标签
 
-64. 带父标签的自定义标签
+67. 带父标签的自定义标签
 
-65. EL自定义函数
+68. EL自定义函数
 
-66. 简单标签小结
+69. 简单标签小结
 
-67. JSTL表达式操作
+70. JSTL表达式操作
 
-68. JSTL流程控制操作
+71. JSTL流程控制操作
 
-69. JSTL迭代操作
+72. JSTL迭代操作
 
-70. JSTL_URL操作
+73. JSTL_URL操作
 
-71. JSTL改写MVC案例
+74. JSTL改写MVC案例
 
-72. Filter概述
+75. Filter概述
 
     1. 过滤器简介
 
@@ -716,18 +716,18 @@
                 2. 多个Filter 拦截的顺序和filter-mapping配置的顺序有关，靠前的先被调用
           3. public void destroy()：释放当前Filter所占用的资源费方法。在Filter被销毁之前被调用，且只被调用一次
 
-73. 创建HttpFilter
+76. 创建HttpFilter
 
-74. 理解多个Filter代码的执行顺序
+77. 理解多个Filter代码的执行顺序
 
-75. 配置Filter的dispatcher节点
+78. 配置Filter的dispatcher节点
 
     1. 指定过滤器所拦截的资源被Servlet 容器调用的方式，可以是REQUEST,INCLUDE,FORWARD和ERROR之一，默认REQUEST，可以设置多个dispatcher子元素来指定Filter 对资源的多种调用方式进行拦截
     2. 注意：
        1. JSP页面，配置指令指定的errorPage跳转页面属于转发（FORWARD）
        2. ERROR：如果目标资源是通过声明式异常处理机制调用的，那么该过滤器将被调用，除此之外，过滤器不会被调用。在web.xml 文件通过error-page节点进行声明。
 
-76. 禁用浏览器缓存的过滤器
+79. 禁用浏览器缓存的过滤器
 
     ```java
     public class NoCacheFilter extends MyHttpFilter {
@@ -741,21 +741,21 @@
     }
     ```
 
-77. 字符编码过滤器
+80. 字符编码过滤器
 
-78. 检查用户是否登录的过滤器
+81. 检查用户是否登录的过滤器
 
-79. Filter小结（1）
+82. Filter小结（1）
 
-80. 权限管理思路分析
+83. 权限管理思路分析
 
-81. 权限管理代码实现
+84. 权限管理代码实现
 
-82. 权限过滤思路分析
+85. 权限过滤思路分析
 
-83. 权限过滤代码实现
+86. 权限过滤代码实现
 
-84. HttpServletRequestWrapper
+87. HttpServletRequestWrapper
 
     ```java
     public class MyHttpServletRequest extends HttpServletRequestWrapper {
@@ -772,9 +772,9 @@
 
     1. Servlet API 中提供了一个HttpServletRequestWrapper类来包装原始的request对象，HttpServletRequestWrapper类实现了HttpServletRequest接口中的所有方法，这些方法的内部实现都是仅仅调用了一下所包装的request对象的对应方法
 
-85. Filter小结（2）
+88. Filter小结（2）
 
-86. 监听域对象创建和销毁的Listener
+89. 监听域对象创建和销毁的Listener
 
     1. 简介
 
@@ -824,7 +824,7 @@
 
        3. 监听绑定到 HttpSession 域中的某个对象的状态的事件监听器
 
-87. 通过Listener理解域对象生命周期
+90. 通过Listener理解域对象生命周期
 
     1. request：是一个请求，当一个响应返回时，即被销毁。当发送一个请求时被创建。注意，请求转发的过程是一个request 对象。重定向是两个请求。
     2. session：当第一次访问 WEB 应用的一个JSP 或 Servlet 时，且该 JSP 或 Servlet 中还需要创建 session 对象，此时服务器会创建一个 session 对象。
@@ -832,7 +832,7 @@
        2. 关闭浏览器，并不意味着 session 销毁，还可以通过 sessionid 找到服务器中的 session 对象。
        3. application：贯穿于当前的 WEB 应用的生命周期，当前 WEB 应用被加载时创建 application 对象，当前 WEB 应用被卸载时销毁 application 对象。
 
-88. 其它的Servlet监听器
+91. 其它的Servlet监听器
 
     1. 域对象中属性的变更的事件监听器
 
@@ -933,49 +933,101 @@
 
     2. 感知Session绑定的事件监听器
 
+       ```java
+       public class Customer implements HttpSessionBindingListener, HttpSessionActivationListener, Serializable {
+          private static final long serialVersionUID = 1054819286381698920L;
+          private String name;
+          private Integer age;
+          public Customer(String name, Integer age) {
+             this.name = name;
+             this.age = age;
+          }
+          public String getName() {
+             return name;
+          }
+          public void setName(String name) {
+             this.name = name;
+          }
+          public Integer getAge() {
+             return age;
+          }
+          public void setAge(Integer age) {
+             this.age = age;
+          }
+          @Override
+          public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("绑定到session：");
+             System.out.println(httpSessionBindingEvent.getName());
+             System.out.println(httpSessionBindingEvent.getValue());
+             System.out.println("---------------------------------------------------");
+          }
+          @Override
+          public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent) {
+             System.out.println("---------------------------------------------------");
+             System.out.println("从session中解除绑定：");
+             System.out.println(httpSessionBindingEvent.getName());
+             System.out.println(httpSessionBindingEvent.getValue());
+             System.out.println("---------------------------------------------------");
+          }
+          @Override
+          public void sessionWillPassivate(HttpSessionEvent httpSessionEvent) {
+             System.out.println(httpSessionEvent.getSession());
+             System.out.println("从内存中写到磁盘上...");
+          }
+          @Override
+          public void sessionDidActivate(HttpSessionEvent httpSessionEvent) {
+             System.out.println(httpSessionEvent.getSession());
+             System.out.println("从磁盘中读取出来...");
+          }
+       }
+       ```
+
        1. 保存在Session域中的对象可以有多种状态：绑定到Session中；从Session域中解除绑定；随Session对象持久化到一个存储设备中；随Session对象从一个存储设备中恢复
        2. Servlet规范中定义了两个特殊的监听器接口来帮助JavaBean对象了解自己在Session域中的这些状态：HttpSessionBindingListener 接口和 HttpSessionActivationListener 接口，实现这两个接口的类不需要web.xml文件中进行注册
        3. HttpSessionBindingListener接口：实现了HttpSessionBindingListener接口的JavaBean对象可以感知自己被绑定到Session中和从Session中解除绑定  的事件
           1. 绑定：调用public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent)方法
           2. 解除绑定：调用public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent)方法
           3. 该监听器较少被使用
-       4. HttpSessionActivationListener接口：实现了HttpSessionActivationListener 接口的JavaBean对象可以感知自己被活化和钝化的事件
+       4. HttpSessionActivationListener接口：实现了HttpSessionActivationListener 接口的JavaBean对象可以感知自己被活化和钝化的事件，同时需要实现Serializable
           1. 钝化之前：调用public void sessionWillPassivate(HttpSessionEvent httpSessionEvent)方法
           2. 活化之后：调用public void sessionDidActivate(HttpSessionEvent httpSessionEvent)方法
+          3. session对象存储在 tomcat 服务器的目录下， SESSION.SER
+          4. 该监听器较少被使用
 
-89. Servlet监听器小结
+92. Servlet监听器小结
 
-90. 文件上传基础
+93. 文件上传基础
 
-91. 使用fileupload组件
+94. 使用fileupload组件
 
-92. 文件上传案例_需求
+95. 文件上传案例_需求
 
-93. 文件上传案例_JS代码
+96. 文件上传案例_JS代码
 
-94. 文件上传案例_约束的可配置性
+97. 文件上传案例_约束的可配置性
 
-95. 文件上传案例_总体步骤分析
+98. 文件上传案例_总体步骤分析
 
-96. 文件上传案例_构建FileUploadBean集合
+99. 文件上传案例_构建FileUploadBean集合
 
-97. 文件上传案例_完成文件的上传
+100. 文件上传案例_完成文件的上传
 
-98. 文件上传案例_复习
+101. 文件上传案例_复习
 
-99. 文件上传案例_校验及小结
+102. 文件上传案例_校验及小结
 
-100. 文件下载
+103. 文件下载
 
-101. 国际化之Locale
+104. 国际化之Locale
 
-102. 国际化之DateFormat
+105. 国际化之DateFormat
 
-103. 国际化之NumberFormat
+106. 国际化之NumberFormat
 
-104. 国际化之MessageFormat
+107. 国际化之MessageFormat
 
-105. 国际化之ResourceBundle
+108. 国际化之ResourceBundle
 
-106. 国际化之fmt标签及小结
+109. 国际化之fmt标签及小结
 

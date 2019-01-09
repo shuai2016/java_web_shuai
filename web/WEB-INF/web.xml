@@ -212,7 +212,7 @@
 
     <!--配置Listener-->
     <listener>
-        <listener-class>xin.yangshuai.javaweb.listener.HelloAttributeListener</listener-class>
+        <listener-class>xin.yangshuai.javaweb.listener.HelloListener</listener-class>
     </listener>
 
 </web-app>

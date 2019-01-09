@@ -41,14 +41,6 @@ public class Customer implements HttpSessionBindingListener, HttpSessionActivati
 	}
 
 	@Override
-	public String toString() {
-		return "Customer{" +
-				"name='" + name + '\'' +
-				", age=" + age +
-				'}';
-	}
-
-	@Override
 	public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent) {
 		System.out.println("---------------------------------------------------");
 		System.out.println("绑定到session：");
@@ -69,11 +61,13 @@ public class Customer implements HttpSessionBindingListener, HttpSessionActivati
 
 	@Override
 	public void sessionWillPassivate(HttpSessionEvent httpSessionEvent) {
+		System.out.println(httpSessionEvent.getSession());
 		System.out.println("从内存中写到磁盘上...");
 	}
 
 	@Override
 	public void sessionDidActivate(HttpSessionEvent httpSessionEvent) {
+		System.out.println(httpSessionEvent.getSession());
 		System.out.println("从磁盘中读取出来...");
 	}
 }
