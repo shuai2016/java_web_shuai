@@ -110,6 +110,16 @@
         <url-pattern>/cookie</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>uploadServlet</servlet-name>
+        <servlet-class>xin.yangshuai.javaweb.servlet.UploadServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>uploadServlet</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+
    <!-- 验证码-->
     <servlet>
         <servlet-name>Kaptcha</servlet-name>
@@ -187,16 +197,16 @@
     </filter-mapping>
 
     <!--注册Filter-->
-    <filter>
+    <!--<filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>xin.yangshuai.javaweb.filter.EncodingFilter</filter-class>
-    </filter>
+    </filter>-->
 
     <!--映射Filter-->
-    <filter-mapping>
+    <!--<filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
     <!--注册Filter-->
     <filter>
@@ -211,8 +221,8 @@
     </filter-mapping>
 
     <!--配置Listener-->
-    <listener>
+    <!--<listener>
         <listener-class>xin.yangshuai.javaweb.listener.HelloListener</listener-class>
-    </listener>
+    </listener>-->
 
 </web-app>
