@@ -1178,6 +1178,25 @@
 
 100. 文件下载
 
+    ```java
+    response.setContentType("application/x-msdownload");
+    String fileName = "图片.jpg";
+    response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+    String realPath = getServletContext().getRealPath("/file/wallhaven-697055.jpg");
+    ServletOutputStream out = response.getOutputStream();
+    InputStream in = new FileInputStream(realPath);
+    byte [] buffer = new byte[1024];
+    int len = 0;
+    while ((len = in.read(buffer)) != -1){
+       out.write(buffer,0,len);
+    }
+    in.close();
+    ```
+
+    1. 通知客户端浏览器：这个一个需要下载的文件，不能再按普通的html的方式打开，即设置一个响应的类型：response.setContentType("application/x-msdownload");
+    2. 通知客户端浏览器：不再由浏览器来处理该文件，而是交由用户自行处理，即设置用户处理的方式：response.setHeader("Content-Disposition","attachment;filename=123.txt");
+    3. 具体文件：可以调用 response.getOutputStream() 的方式，以 IO 流的方式发送给客户端。
+
 101. 国际化之Locale
 
 102. 国际化之DateFormat
