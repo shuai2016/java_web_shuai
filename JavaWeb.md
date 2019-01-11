@@ -1178,30 +1178,81 @@
 
 100. 文件下载
 
-    ```java
-    response.setContentType("application/x-msdownload");
-    String fileName = "图片.jpg";
-    response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
-    String realPath = getServletContext().getRealPath("/file/wallhaven-697055.jpg");
-    ServletOutputStream out = response.getOutputStream();
-    InputStream in = new FileInputStream(realPath);
-    byte [] buffer = new byte[1024];
-    int len = 0;
-    while ((len = in.read(buffer)) != -1){
-       out.write(buffer,0,len);
-    }
-    in.close();
-    ```
+   ```java
+   response.setContentType("application/x-msdownload");
+   String fileName = "图片.jpg";
+   response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+   String realPath = getServletContext().getRealPath("/file/wallhaven-697055.jpg");
+   ServletOutputStream out = response.getOutputStream();
+   InputStream in = new FileInputStream(realPath);
+   byte [] buffer = new byte[1024];
+   int len = 0;
+   while ((len = in.read(buffer)) != -1){
+      out.write(buffer,0,len);
+   }
+   in.close();
+   ```
 
-    1. 通知客户端浏览器：这个一个需要下载的文件，不能再按普通的html的方式打开，即设置一个响应的类型：response.setContentType("application/x-msdownload");
-    2. 通知客户端浏览器：不再由浏览器来处理该文件，而是交由用户自行处理，即设置用户处理的方式：response.setHeader("Content-Disposition","attachment;filename=123.txt");
-    3. 具体文件：可以调用 response.getOutputStream() 的方式，以 IO 流的方式发送给客户端。
+   1. 通知客户端浏览器：这个一个需要下载的文件，不能再按普通的html的方式打开，即设置一个响应的类型：response.setContentType("application/x-msdownload");
+   2. 通知客户端浏览器：不再由浏览器来处理该文件，而是交由用户自行处理，即设置用户处理的方式：response.setHeader("Content-Disposition","attachment;filename=123.txt");
+   3. 具体文件：可以调用 response.getOutputStream() 的方式，以 IO 流的方式发送给客户端。
 
 101. 国际化之Locale
 
+    1. 概述
+
+      1. 软件本地化：一个软件在某个国家或地区使用时，采用该国家或地区的语言，数字，货币，日期等习惯
+      2. 软件的国际化：软件开发时，让它能支持多个国家和地区的本地化应用。
+      3. 本地信息敏感数据：随用户区域信息而变化的数据称为本地信息敏感数据
+      4. i18n：国际化又称为i18n，internationalization
+
+    2. Locale
+
+      ```java
+      Locale locale = request.getLocale();
+      System.out.println(locale);
+      locale = Locale.CHINA;
+      System.out.println(locale);
+      locale = new Locale("EN","US");
+      System.out.println(locale);
+      ```
+
 102. 国际化之DateFormat
 
+    ```java
+    Locale locale = Locale.CHINA;
+    Date date = new Date();
+    System.out.println(date);
+    DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM, locale);
+    String format = dateFormat.format(date);
+    System.out.println(format);
+    String str = "2019-01-11 17:20:08";
+    DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:ss:mm");
+    Date parse = simpleDateFormat.parse(str);
+    System.out.println(parse);
+    ```
+
 103. 国际化之NumberFormat
+
+    ```java
+    locale = Locale.CHINA;
+    double d = 123456789.123d;
+    //格式化为数字字符串
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+    String format1 = numberFormat.format(d);
+    System.out.println(format1);
+    //格式化为货币字符串
+    NumberFormat currencyInstance = NumberFormat.getCurrencyInstance(locale);
+    String format2 = currencyInstance.format(d);
+    System.out.println(format2);
+    
+    String str1 = "123,456,789.123";
+    Double parse1 = (Double) numberFormat.parse(str1);
+    System.out.println(parse1);
+    str1 = "￥123,456,789.123";
+    Double parse2 = (Double) currencyInstance.parse(str1);
+    System.out.println(parse2);
+    ```
 
 104. 国际化之MessageFormat
 

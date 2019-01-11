@@ -130,6 +130,16 @@
         <url-pattern>/download</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>i18nServlet</servlet-name>
+        <servlet-class>xin.yangshuai.javaweb.servlet.I18nServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>i18nServlet</servlet-name>
+        <url-pattern>/i18n</url-pattern>
+    </servlet-mapping>
+
    <!-- 验证码-->
     <servlet>
         <servlet-name>Kaptcha</servlet-name>
