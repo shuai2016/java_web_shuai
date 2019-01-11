@@ -39,13 +39,16 @@ public class UploadServlet extends HttpServlet {
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		//设置上传文件的总的大小，也可以设置单个文件的大小
 		upload.setSizeMax(yourMaxRequestSize);
+		int index = 1;
 		try {
 			List<FileItem> items = upload.parseRequest(request);
 			for (FileItem item : items) {
 				if (item.isFormField()) {
+					System.out.println("***********************"+index++ +" 普通表单组件start******************************");
 					String name = item.getFieldName();
-					String value = item.getString();
+					String value = item.getString("UTF-8");
 					System.out.println(name + " : " + value);
+					System.out.println("***********************普通表单组件end******************************");
 				} else {
 					String fieldName = item.getFieldName();
 					String fileName = item.getName();
@@ -64,7 +67,9 @@ public class UploadServlet extends HttpServlet {
 					byte[] buffer = new byte[1024];
 					int len = 0;
 
-					fileName = "E:\\tempDirectory\\" + fileName;
+					//fileName = "E:\\tempDirectory\\" + fileName;
+					System.out.println(getServletContext().getRealPath("/file/"));
+					fileName = getServletContext().getRealPath("/file") + "/" + fileName;
 					System.out.println(fileName);
 
 					OutputStream out = new FileOutputStream(fileName);

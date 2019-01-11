@@ -12,5 +12,6 @@
 </head>
 <body>
 <a href="upload.jsp">文件上传</a>
+<a href="download.jsp">文件下载</a>
 </body>
 </html>

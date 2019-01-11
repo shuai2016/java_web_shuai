@@ -11,5 +11,9 @@
     <title>文件下载</title>
 </head>
 <body>
+<a href="<%=request.getContextPath()%>/file/psb.jpg">psb.jpg</a>
+
+<a href="<%=request.getContextPath()%>/download">下载</a>
+
 </body>
 </html>
