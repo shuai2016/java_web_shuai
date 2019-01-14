@@ -1,13 +1,9 @@
 package xin.yangshuai;
 
-import javafx.scene.input.DataFormat;
-
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.Date;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Hello
@@ -16,7 +12,7 @@ import java.util.Locale;
  * @date 2018/12/18
  */
 public class Hello {
-	public void info(){
+	public void info() {
 		System.out.println("Hello World !");
 	}
 
@@ -51,5 +47,31 @@ public class Hello {
 		Double parse2 = (Double) currencyInstance.parse(str1);
 		System.out.println(parse2);
 
+		locale = Locale.CHINA;
+		String str2 = "Date：{0}，Salary：{1}";
+		Date date1 = new Date();
+		double sal = 12345.12;
+		String format3 = MessageFormat.format(str2, date1, sal);
+		System.out.println(format3);
+		DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+		String format4 = dateInstance.format(date1);
+		NumberFormat currencyInstance1 = NumberFormat.getCurrencyInstance(locale);
+		String format5 = currencyInstance1.format(sal);
+		format3 = MessageFormat.format(str2, format4, format5);
+		System.out.println(format3);
+
+		date1 = new Date();
+		sal = 12345.12;
+		locale = Locale.CHINA;
+		ResourceBundle i18n = ResourceBundle.getBundle("i18n", locale);
+		String dateLable = i18n.getString("date");
+		String salLable = i18n.getString("salary");
+		String str3 = "{0}：{1}，{2}：{3}";
+		dateInstance = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+		format4 = dateInstance.format(date1);
+		currencyInstance1 = NumberFormat.getCurrencyInstance(locale);
+		format5 = currencyInstance1.format(sal);
+		format3 = MessageFormat.format(str3, dateLable, format4, salLable, format5);
+		System.out.println(format3);
 	}
 }

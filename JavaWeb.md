@@ -1178,24 +1178,24 @@
 
 100. 文件下载
 
-   ```java
-   response.setContentType("application/x-msdownload");
-   String fileName = "图片.jpg";
-   response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
-   String realPath = getServletContext().getRealPath("/file/wallhaven-697055.jpg");
-   ServletOutputStream out = response.getOutputStream();
-   InputStream in = new FileInputStream(realPath);
-   byte [] buffer = new byte[1024];
-   int len = 0;
-   while ((len = in.read(buffer)) != -1){
-      out.write(buffer,0,len);
-   }
-   in.close();
-   ```
+  ```java
+  response.setContentType("application/x-msdownload");
+  String fileName = "图片.jpg";
+  response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+  String realPath = getServletContext().getRealPath("/file/wallhaven-697055.jpg");
+  ServletOutputStream out = response.getOutputStream();
+  InputStream in = new FileInputStream(realPath);
+  byte [] buffer = new byte[1024];
+  int len = 0;
+  while ((len = in.read(buffer)) != -1){
+     out.write(buffer,0,len);
+  }
+  in.close();
+  ```
 
-   1. 通知客户端浏览器：这个一个需要下载的文件，不能再按普通的html的方式打开，即设置一个响应的类型：response.setContentType("application/x-msdownload");
-   2. 通知客户端浏览器：不再由浏览器来处理该文件，而是交由用户自行处理，即设置用户处理的方式：response.setHeader("Content-Disposition","attachment;filename=123.txt");
-   3. 具体文件：可以调用 response.getOutputStream() 的方式，以 IO 流的方式发送给客户端。
+  1. 通知客户端浏览器：这个一个需要下载的文件，不能再按普通的html的方式打开，即设置一个响应的类型：response.setContentType("application/x-msdownload");
+  2. 通知客户端浏览器：不再由浏览器来处理该文件，而是交由用户自行处理，即设置用户处理的方式：response.setHeader("Content-Disposition","attachment;filename=123.txt");
+  3. 具体文件：可以调用 response.getOutputStream() 的方式，以 IO 流的方式发送给客户端。
 
 101. 国际化之Locale
 
@@ -1256,7 +1256,63 @@
 
 104. 国际化之MessageFormat
 
+    ```java
+    locale = Locale.CHINA;
+    String str2 = "Date：{0}，Salary：{1}";
+    Date date1 = new Date();
+    double sal = 12345.12;
+    String format3 = MessageFormat.format(str2, date1, sal);
+    System.out.println(format3);
+    DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+    String format4 = dateInstance.format(date1);
+    NumberFormat currencyInstance1 = NumberFormat.getCurrencyInstance(locale);
+    String format5 = currencyInstance1.format(sal);
+    format3 = MessageFormat.format(str2, format4, format5);
+    System.out.println(format3);
+    ```
+
+    1. MessageFormat：可以格式化模式字符串
+    2. 模式字符串：带占位符的字符串："Date：{0}，Salary：{1}"
+    3. 可以通过 format 方法对模式字符串进行格式化
+
 105. 国际化之ResourceBundle
 
+    ```java
+    date1 = new Date();
+    sal = 12345.12;
+    locale = Locale.CHINA;
+    ResourceBundle i18n = ResourceBundle.getBundle("i18n", locale);
+    String dateLable = i18n.getString("date");
+    String salLable = i18n.getString("salary");
+    String str3 = "{0}：{1}，{2}：{3}";
+    dateInstance = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+    format4 = dateInstance.format(date1);
+    currencyInstance1 = NumberFormat.getCurrencyInstance(locale);
+    format5 = currencyInstance1.format(sal);
+    format3 = MessageFormat.format(str3, dateLable, format4, salLable, format5);
+    System.out.println(format3);
+    ```
+
+    1. ResourceBundle类用于描述一个资源包，一个资源包用于包含一组与某个本地环境相关的对象，可以从一个资源包中获取特定于本地环境的对象。对于不同的本地环境，可以有不同的ResourceBundle对象与之关联，关联的ResourceBundle对象中包含该本地环境下专有的对象。
+      1. 在类路径下需要有对应的资源文件：baseName.properties，其中 baseName 是基名
+      2. 使用 基名\_语言代码\_国家代码.properties 来添加不同国家或地区的资源文件：i18n\_zh\_CN.properties
+      3. 要求所有基名相同的资源文件的key 必须完全一致
+      4. 可以使用native2ascii 命令来得到 汉字 对应的ascii 码
+      5. 可以调用ResourceBundle.getBundle(基名, Local实例) 来获取 ResourceBundle 对象
+      6. 可以调用ResourceBundle 的getString(key) 方法来获取资源文件的 value 字符串的值
+      7. 结合 DateFormat，NumberFormat，MessageFormat 即可实现国际化。
+
 106. 国际化之fmt标签及小结
+
+    ```jsp
+    <c:if test="${sessionScope.locale != null}">
+      <fmt:setLocale value="${sessionScope.locale}"/>
+    </c:if>
+    <fmt:setBundle basename="i18n"/>
+    <fmt:message key="date"/> : <fmt:formatDate value="${date1}" dateStyle="FULL"/> ,
+    <fmt:message key="salary"/> : <fmt:formatNumber value="${salary1}" type="currency"/>
+    <br>
+    <a href="<%=request.getContextPath()%>/i18n?locale=zh_CN">中文</a>
+    <a href="<%=request.getContextPath()%>/i18n?locale=en_US">英文</a>
+    ```
 
